@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import "./App.css"
+import MovieCard from "./components/MovieCard/MovieCard"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MovieCard
+        title="The Shawshank Redemption"
+        year={1994}
+        description="Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+        genres={["Drama"]}
+        imageUrl="images/pic1.jpg"
+        isFavorite={false}
+        rate={9.2}
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
