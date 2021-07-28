@@ -11,7 +11,6 @@ function App() {
         description="Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
         genres={["Drama"]}
         imageUrl="images/pic1.jpg"
-        isFavorite={false}
         rate={9.2}
       />
     </div>
