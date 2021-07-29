@@ -12,25 +12,25 @@ const AppRouter = () => {
     return (
 
         <Switch>
-            <Route path="/">
+            <Route path="/" exact>
                 <>
                     <AppHeader hasSearchBox={false} />
                     <HomePage />
                 </>
             </Route>
-            <Route path="/result">
+            <Route path="/result" exact>
                 <>
                     <AppHeader hasSearchBox={true} />
                     <ResultPage />
                 </>
             </Route>
-            <Route path="/myFavorite">
+            <Route path="/myFavorite" exact>
                 <>
                     <AppHeader hasSearchBox={true} />
                     <FavoriteList />
                 </>
             </Route>
-            <Route path="/watchlist">
+            <Route path="/watchlist" exact>
                 <>
                     <AppHeader hasSearchBox={true} />
                     <WatchList />
