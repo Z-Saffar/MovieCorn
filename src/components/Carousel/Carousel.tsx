@@ -1,23 +1,34 @@
+import { Box, CircularProgress } from '@material-ui/core';
 import React, { VFC } from 'react';
-import Carousel, { CarouselProps } from 'react-material-ui-carousel';
-import CarouselItem, { ICarouselItemProps } from './CarouselItem';
+import ReactCarousel, { CarouselProps } from 'react-material-ui-carousel';
+import { TopRated } from '../../containers/home-page/hooks/types';
+import { getAbsoluteImageURL } from '../../helper';
+import CarouselItem from './CarouselItem';
 
 export interface ICarouselProps extends CarouselProps {
-    items: ICarouselItemProps[]
+    items?: TopRated[]
 }
-const MyCarousel: VFC<ICarouselProps> = (props) => {
+const Carousel: VFC<ICarouselProps> = (props) => {
     const { items, ...others } = props
+
     return (
-        <Carousel
-            animation='slide'
-            {...others}
-        >
-            {
-                items.map((item, i) => <CarouselItem key={i} {...item} />)
-            }
-        </Carousel>
+        <Box height={600}>
+            {!items && <CircularProgress />}
+            <ReactCarousel
+                animation='slide'
+                {...others}
+            >
+                {
+                    items?.slice(0, 5).map((item, i) => {
+                        console.log("🦎 ~ items?.map ~ getAbsoluteImageURL", getAbsoluteImageURL(item.backdrop_path, 500))
+                        return <CarouselItem key={i} title={item.title}
+                            imageUrl={getAbsoluteImageURL(item.backdrop_path, 500)} />;
+                    })
+                }
+            </ReactCarousel>
+        </Box>
     )
 }
 
 
-export default MyCarousel
+export default Carousel

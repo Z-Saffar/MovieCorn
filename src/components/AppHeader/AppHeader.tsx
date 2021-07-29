@@ -12,6 +12,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { VFC } from 'react';
 import { ReactComponent as MovieCornIcon } from '../../logo.svg';
 import IconButtonRouter from '../IconButtonRouter/IconButtonRouter';
+import SearchBox from '../SearchBox/SearchBox';
 
 interface IAppHeaderProps {
     hasSearchBox: boolean
@@ -67,7 +68,7 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
 
                     <div className={classes.grow}>
                         <Box className={classes.searchBoxWrapper}>
-                            {hasSearchBox && <div>search box</div>}
+                            {hasSearchBox && <SearchBox />}
                         </Box>
                     </div>
                     <div className={classes.sectionDesktop}>

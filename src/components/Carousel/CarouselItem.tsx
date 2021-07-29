@@ -1,19 +1,14 @@
 import { Button, Paper } from "@material-ui/core"
 import { VFC } from "react"
 export interface ICarouselItemProps {
-    name: string
-    description: string
     imageUrl: string
+    title: string
 }
-const CarouselItem: VFC<ICarouselItemProps> = ({ name, description, imageUrl }) => {
+const CarouselItem: VFC<ICarouselItemProps> = ({ imageUrl, title }) => {
     return (
-        <Paper>
-            <h2>{name}</h2>
-            <p>{description}</p>
-            <Button className="CheckButton">
-                Check it out!
-            </Button>
-        </Paper>
+
+        <img src={imageUrl} alt={title} />
+
     )
 }
 export default CarouselItem
