@@ -10,7 +10,7 @@ const HomePage = () => {
     console.log("🦎 ~ HomePage ~ topRateData", topRateData)
 
     return (
-        <Layout withSearchBox={true}>
+        <Layout withSearchBox={false}>
             <Carousel items={topRateData} />
             <div className={classes.searchWrapper}>
                 <Box className={classes.searchInnerWrapper}>

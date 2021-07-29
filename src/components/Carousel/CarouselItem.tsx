@@ -1,4 +1,4 @@
-import { Button, Paper } from "@material-ui/core"
+import { Box, Button, Paper } from "@material-ui/core"
 import { VFC } from "react"
 export interface ICarouselItemProps {
     imageUrl: string
@@ -6,8 +6,9 @@ export interface ICarouselItemProps {
 }
 const CarouselItem: VFC<ICarouselItemProps> = ({ imageUrl, title }) => {
     return (
-
-        <img src={imageUrl} alt={title} />
+        <Box maxHeight={400} mt={2} mb={2} >
+            <img src={imageUrl} alt={title} />
+        </Box>
 
     )
 }
