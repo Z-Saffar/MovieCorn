@@ -11,6 +11,7 @@ import { Bookmark, Favorite } from '@material-ui/icons';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { VFC } from 'react';
 import { ReactComponent as MovieCornIcon } from '../../logo.svg';
+import IconButtonRouter from '../IconButtonRouter/IconButtonRouter';
 
 interface IAppHeaderProps {
     hasSearchBox: boolean
@@ -70,16 +71,16 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
                         </Box>
                     </div>
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show favorite movies" color="inherit">
+                        <IconButtonRouter aria-label="show favorite movies" to='/myFavorite' className={classes.IconButton}>
                             <Badge badgeContent={4} color="secondary">
                                 <Favorite />
                             </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show watchlist" color="inherit">
+                        </IconButtonRouter>
+                        <IconButtonRouter aria-label="show watchlist" to='/watchlist' className={classes.IconButton}>
                             <Badge badgeContent={17} color="secondary">
                                 <Bookmark />
                             </Badge>
-                        </IconButton>
+                        </IconButtonRouter>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
@@ -99,8 +100,9 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
     );
 }
 export default AppHeader
+
 const useStyles = makeStyles((theme: Theme) => {
-    const { breakpoints: { up }, spacing } = theme
+    const { breakpoints: { up }, spacing, palette } = theme
     return createStyles({
         grow: {
             flexGrow: 1,
@@ -147,6 +149,9 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         menuIcon: {
             margin: spacing(1, 1.5, 1, 0)
+        },
+        IconButton: {
+            color: palette.common.white
         }
 
     });

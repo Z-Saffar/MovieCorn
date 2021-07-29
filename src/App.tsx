@@ -1,13 +1,15 @@
 import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
 import "./App.css"
-import AppHeader from "./components/AppHeader/AppHeader"
+import AppRouter from "./AppRouter"
 
 
 function App() {
   return (
-    <div className="App">
-      <AppHeader hasSearchBox={false} />
-    </div>
+    <Router>
+      <AppRouter />
+    </Router>
+
   )
 }
 
