@@ -9,7 +9,7 @@ import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded'
 import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Rating from '@material-ui/lab/Rating';
-import { Box, IconButton } from "@material-ui/core"
+import { Box, Hidden, IconButton } from "@material-ui/core"
 
 export interface MovieCardProps {
   title: string
@@ -43,38 +43,57 @@ const MovieCard: VFC<MovieCardProps> = ({
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item className={classes.imageWrapper}>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={imageUrl} />
-            </ButtonBase>
-          </Grid>
+          <Hidden mdUp>
+            <Grid item className={classes.imageWrapper}>
+              <ButtonBase className={classes.image}>
+                <img className={classes.img} alt="complex" src={imageUrl} />
+              </ButtonBase>
+              <div className={classes.iconButtons}>
+                <IconButton onClick={handleFavorite}>
+                  {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
+                    <FavoriteBorderRoundedIcon color='secondary' />}
+                </IconButton>
+                <IconButton onClick={handleWatchList}>
+                  {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
+                    <BookmarkBorderRoundedIcon color='primary' />}
+                </IconButton>
+              </div>
+            </Grid>
+          </Hidden>
           <Grid item xs={12} sm container>
+            <Hidden smDown>
+              <Grid item>
+                <ButtonBase className={classes.image}>
+                  <img className={classes.img} alt="complex" src={imageUrl} />
+                </ButtonBase>
+              </Grid>
+            </Hidden>
             <Grid item xs className={classes.description}>
               <Box textAlign='left'>
                 <Typography gutterBottom variant="h5">
                   {title} - ({new Date(year).getFullYear()})
                 </Typography>
-              </Box>
-              <Box mb={1}>
                 <Rating name="read-only" value={rate} readOnly />
+                <Typography variant="body2" color="textSecondary">
+                  {rank}
+                </Typography>
               </Box>
-              <Typography variant="body2" color="textSecondary">
-                {rank}
-              </Typography>
-              <Box textAlign='left'>
+              <Box textAlign='justify' mt={2}>
                 <Typography variant="body1">{description}</Typography>
               </Box>
             </Grid>
-            <Grid item>
-              <IconButton onClick={handleFavorite}>
-                {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
-                  <FavoriteBorderRoundedIcon color='secondary' />}
-              </IconButton>
-              <IconButton onClick={handleWatchList}>
-                {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
-                  <BookmarkBorderRoundedIcon color='primary' />}
-              </IconButton>
-            </Grid>
+            <Hidden smDown>
+              <Grid item>
+                <IconButton onClick={handleFavorite}>
+                  {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
+                    <FavoriteBorderRoundedIcon color='secondary' />}
+                </IconButton>
+                <IconButton onClick={handleWatchList}>
+                  {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
+                    <BookmarkBorderRoundedIcon color='primary' />}
+                </IconButton>
+              </Grid>
+            </Hidden>
           </Grid>
         </Grid>
       </Paper>
@@ -83,21 +102,23 @@ const MovieCard: VFC<MovieCardProps> = ({
 }
 export default MovieCard
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  const { spacing, breakpoints: { up } } = theme
+  return createStyles({
     root: {
       flexGrow: 1,
     },
     paper: {
-      padding: theme.spacing(2),
+      padding: spacing(2),
       margin: "auto",
-      marginTop: theme.spacing(1),
+      marginTop: spacing(1),
       maxWidth: "90%",
     },
     imageWrapper: {
-      [theme.breakpoints.down("sm")]: {
-        width: "100%",
-      },
+      position: 'relative',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center'
     },
     image: {
       width: 250,
@@ -109,10 +130,21 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: "100%",
       maxHeight: "100%",
     },
+    iconButtons: {
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      [up('sm')]: {
+        flexDirection: 'row'
+      }
+    },
     description: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
     },
   })
+}
 )
