@@ -21,6 +21,7 @@ const ResultPage = () => {
                 rate={5}
                 title={item.title}
                 year={item.release_date}
+                id={item.id}
                 key={item.id}
             />
         })}

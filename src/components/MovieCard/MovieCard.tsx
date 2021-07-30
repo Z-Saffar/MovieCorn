@@ -1,15 +1,18 @@
-import React, { useState, VFC, useCallback } from "react"
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import { Box, Hidden, IconButton } from "@material-ui/core"
+import ButtonBase from "@material-ui/core/ButtonBase"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
-import ButtonBase from "@material-ui/core/ButtonBase"
+import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded'
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded'
-import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded';
-import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import Rating from '@material-ui/lab/Rating';
-import { Box, Hidden, IconButton } from "@material-ui/core"
+import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded'
+import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded'
+import Rating from '@material-ui/lab/Rating'
+import React, { useCallback, useState, VFC } from "react"
+import { useEffect } from "react"
+import { useFavoriteContext } from "../../context/favorite.context"
+import { useWatchListContext } from "../../context/watchList.context"
 
 export interface MovieCardProps {
   title: string
@@ -18,6 +21,7 @@ export interface MovieCardProps {
   rank: number
   description: string
   imageUrl: string
+  id: number
 }
 
 const MovieCard: VFC<MovieCardProps> = ({
@@ -27,17 +31,51 @@ const MovieCard: VFC<MovieCardProps> = ({
   rank,
   title,
   year,
+  id
 }) => {
   const classes = useStyles()
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInWatchList, setIsInWatchList] = useState(false)
+  const { setFavoriteContextList, favoriteContextList } = useFavoriteContext()
+  const { setWatchListInContext, watchListInContext } = useWatchListContext()
 
-  const handleFavorite = useCallback(() => {
+  const handleFavorite = useCallback((movieId: number) => {
+    const existingFavorite: number[] = JSON.parse(localStorage.getItem('favoriteList') ?? '[]')
+    const index = existingFavorite.indexOf(movieId);
+    if (index > -1) {
+      existingFavorite.splice(index, 1);
+    } else {
+      existingFavorite.push(id)
+    }
+    setFavoriteContextList(existingFavorite)
+    localStorage.setItem("favoriteList", JSON.stringify(existingFavorite));
     setIsFavorite(!isFavorite)
-  }, [isFavorite])
-  const handleWatchList = useCallback(() => {
+  }, [id, isFavorite, setFavoriteContextList])
+
+  const handleWatchList = useCallback((movieId: number) => {
+    const existingWatchlist: number[] = JSON.parse(localStorage.getItem('watchList') ?? '[]')
+    const index = existingWatchlist.indexOf(movieId);
+    if (index > -1) {
+      existingWatchlist.splice(index, 1);
+    } else {
+      existingWatchlist.push(id)
+    }
+    setWatchListInContext(existingWatchlist)
+    localStorage.setItem("watchList", JSON.stringify(existingWatchlist));
+
     setIsInWatchList(!isInWatchList)
-  }, [isInWatchList])
+  }, [id, isInWatchList, setWatchListInContext])
+
+  useEffect(() => {
+    const favIndex = favoriteContextList.indexOf(id)
+    if (favIndex > -1) {
+      setIsFavorite(true)
+    }
+    const watchIndex = watchListInContext.indexOf(id)
+    if (watchIndex > -1) {
+      setIsInWatchList(true)
+    }
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -49,11 +87,11 @@ const MovieCard: VFC<MovieCardProps> = ({
                 <img className={classes.img} alt="complex" src={imageUrl} />
               </ButtonBase>
               <div className={classes.iconButtons}>
-                <IconButton onClick={handleFavorite}>
+                <IconButton onClick={() => { handleFavorite(id) }}>
                   {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
                     <FavoriteBorderRoundedIcon color='secondary' />}
                 </IconButton>
-                <IconButton onClick={handleWatchList}>
+                <IconButton onClick={() => { handleWatchList(id) }} >
                   {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
                     <BookmarkBorderRoundedIcon color='primary' />}
                 </IconButton>
@@ -84,11 +122,11 @@ const MovieCard: VFC<MovieCardProps> = ({
             </Grid>
             <Hidden smDown>
               <Grid item>
-                <IconButton onClick={handleFavorite}>
+                <IconButton onClick={() => { handleFavorite(id) }}>
                   {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
                     <FavoriteBorderRoundedIcon color='secondary' />}
                 </IconButton>
-                <IconButton onClick={handleWatchList}>
+                <IconButton onClick={() => { handleWatchList(id) }}>
                   {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
                     <BookmarkBorderRoundedIcon color='primary' />}
                 </IconButton>
