@@ -4,7 +4,7 @@ export interface Pagination<T> {
   total_pages: number
   total_results: number
 }
-export interface TopRated {
+export interface MovieResult {
   adult: boolean
   backdrop_path: string
   genre_ids: number[]

@@ -20,7 +20,6 @@ const Carousel: VFC<ICarouselProps> = (props) => {
             >
                 {
                     items?.slice(0, 5).map((item, i) => {
-                        console.log("🦎 ~ items?.map ~ getAbsoluteImageURL", getAbsoluteImageURL(item.backdrop_path, 500))
                         return <CarouselItem key={i} title={item.title}
                             imageUrl={getAbsoluteImageURL(item.backdrop_path, 1280)} />;
                     })

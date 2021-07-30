@@ -11,20 +11,20 @@ import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import Rating from '@material-ui/lab/Rating';
 import { Box, IconButton } from "@material-ui/core"
 
-export interface IMovieCard {
+export interface MovieCardProps {
   title: string
-  year: number
+  year: Date
   rate: number
-  genres: string
+  rank: number
   description: string
   imageUrl: string
 }
 
-const MovieCard: VFC<IMovieCard> = ({
+const MovieCard: VFC<MovieCardProps> = ({
   description,
-  genres,
   imageUrl,
   rate,
+  rank,
   title,
   year,
 }) => {
@@ -52,17 +52,14 @@ const MovieCard: VFC<IMovieCard> = ({
             <Grid item xs className={classes.description}>
               <Box textAlign='left'>
                 <Typography gutterBottom variant="h5">
-                  {title} - ({year})
+                  {title} - ({new Date(year).getFullYear()})
                 </Typography>
               </Box>
               <Box mb={1}>
-                <Rating name="read-only" value={4} readOnly />
+                <Rating name="read-only" value={rate} readOnly />
               </Box>
-              <Typography variant="body2" gutterBottom>
-                {genres}
-              </Typography>
               <Typography variant="body2" color="textSecondary">
-                {rate}
+                {rank}
               </Typography>
               <Box textAlign='left'>
                 <Typography variant="body1">{description}</Typography>
@@ -94,6 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: theme.spacing(2),
       margin: "auto",
+      marginTop: theme.spacing(1),
       maxWidth: "90%",
     },
     imageWrapper: {

@@ -1,6 +1,6 @@
 import React from "react"
 import { getAllByRole, render, screen } from "@testing-library/react"
-import MovieCard, { IMovieCard } from "./MovieCard"
+import MovieCard, { IMovieCard } from "."
 import { build, fake } from '@jackfranklin/test-data-bot'
 
 
