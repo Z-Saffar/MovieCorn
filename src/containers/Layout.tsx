@@ -18,12 +18,14 @@ const Layout: FC<{ withSearchBox: boolean }> = ({ children, withSearchBox = fals
                 watchListInContext: watchList,
                 setWatchListInContext: () => { }
             }}>
-                <AppHeader hasSearchBox={withSearchBox} />
-                <Grid container justifyContent='center'>
-                    <Grid item xs={10} >
-                        {children}
+                <Container maxWidth="xl">
+                    <AppHeader hasSearchBox={withSearchBox} />
+                    <Grid container justifyContent='center'>
+                        <Grid item xs={10} >
+                            {children}
+                        </Grid>
                     </Grid>
-                </Grid>
+                </Container>
             </WatchListProvider>
         </FavoriteProvider>
     )

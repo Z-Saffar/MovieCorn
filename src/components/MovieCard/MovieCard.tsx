@@ -8,20 +8,18 @@ import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded'
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded'
 import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded'
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded'
-import Rating from '@material-ui/lab/Rating'
+import StarIcon from '@material-ui/icons/Star'
 import React, { useCallback, useEffect, useState, VFC } from "react"
 import { useFavoriteContext } from "../../context/favorite.context"
 import { useWatchListContext } from "../../context/watchList.context"
 import { getAbsoluteImageURL } from "../../helper"
 import { MovieCardProps } from "./types"
 
-
 const MovieCard: VFC<MovieCardProps> = (props) => {
   const {
     description,
     imageUrl,
     imageWidth,
-    rate,
     rank,
     title,
     year,
@@ -73,7 +71,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
       setIsInWatchList(true)
     }
   }, [favoriteContextList, id, watchListInContext])
-
+  const imageSrc = !!imageUrl ? getAbsoluteImageURL(imageUrl, imageWidth) : process.env.PUBLIC_URL + '/images/noImage.png'
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -81,8 +79,8 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
           <Hidden mdUp>
             <Grid item className={classes.imageWrapper}>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="complex"
-                  src={imageUrl ? getAbsoluteImageURL(imageUrl, imageWidth) : process.env.PUBLIC_URL + '/images/noImage.png'} />
+                <img className={classes.img} alt={title}
+                  src={imageSrc} />
               </ButtonBase>
               <div className={classes.iconButtons}>
                 <IconButton onClick={() => { handleFavorite({ ...props }) }}>
@@ -100,7 +98,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
             <Hidden smDown>
               <Grid item>
                 <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt="complex" src={getAbsoluteImageURL(imageUrl, imageWidth)} />
+                  <img className={classes.img} alt={title} src={imageSrc} />
                 </ButtonBase>
               </Grid>
             </Hidden>
@@ -109,10 +107,12 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
                 <Typography gutterBottom variant="h5">
                   {title} - ({new Date(year).getFullYear()})
                 </Typography>
-                <Rating name="read-only" value={rate} readOnly />
-                <Typography variant="body2" color="textSecondary">
-                  {rank}
-                </Typography>
+                <Box display='flex' alignItems='flex-end' >
+                  <StarIcon classes={{ root: classes.starIcon }} />
+                  <Typography variant="body2" color="textSecondary">
+                    {rank}
+                  </Typography>
+                </Box>
               </Box>
               <Box textAlign='justify' mt={2}>
                 <Typography variant="body1">{description}</Typography>
@@ -181,6 +181,10 @@ const useStyles = makeStyles((theme: Theme) => {
       flexDirection: "column",
       alignItems: "flex-start",
     },
+    starIcon: {
+      fill: '#fcd202',
+      marginRight: spacing(0.5)
+    }
   })
 }
 )

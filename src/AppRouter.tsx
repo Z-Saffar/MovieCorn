@@ -13,13 +13,13 @@ const AppRouter = () => {
             <Route path="/" exact>
                 <HomePage />
             </Route>
-            <Route path="/search" exact>
+            <Route path="/search">
                 <ResultPage />
             </Route>
-            <Route path="/myFavorite" exact>
+            <Route path="/myFavorite">
                 <FavoritePage />
             </Route>
-            <Route path="/watchlist" exact>
+            <Route path="/watchlist">
                 <WatchListPage />
             </Route>
         </Switch>
