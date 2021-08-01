@@ -1,11 +1,11 @@
 const useApp = () => {
-  const favoriteList = localStorage.getItem("favoriteList")
-  const watchList = localStorage.getItem("watchList")
+  const favoriteList = localStorage.getItem('favoriteList')
+  const watchList = localStorage.getItem('watchList')
   if (!favoriteList) {
-    localStorage.setItem("favoriteList", JSON.stringify({}))
+    localStorage.setItem('favoriteList', JSON.stringify({}))
   }
   if (!watchList) {
-    localStorage.setItem("watchList", JSON.stringify({}))
+    localStorage.setItem('watchList', JSON.stringify({}))
   }
   return {
     favoriteList,

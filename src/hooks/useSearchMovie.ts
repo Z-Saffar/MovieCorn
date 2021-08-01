@@ -1,7 +1,7 @@
-import { apis } from "api/axiosClient"
-import { MovieResult } from "containers/home-page/types"
-import { useCallback, useState } from "react"
-import { useQuery } from "./useQuery"
+import { apis } from 'api/axiosClient'
+import { MovieResult } from 'containers/home-page/types'
+import { useCallback, useState } from 'react'
+import { useQuery } from './useQuery'
 
 const useLazySearchMovie = (): [
   (searchText: string) => Promise<void>,
@@ -15,14 +15,14 @@ const useLazySearchMovie = (): [
   const search = useCallback(
     async (searchText: string) => {
       const { data } = await apis.searchData({ searchText, pageIndex })
-      const queryParam = query.get("q")
+      const queryParam = query.get('q')
       if (movies?.length && queryParam === searchText) {
         setMovies([...movies, ...data.results])
       } else {
         setMovies(data.results)
       }
     },
-    [pageIndex]
+    [movies, pageIndex, query]
   )
 
   const nextPage = () => {

@@ -1,13 +1,15 @@
-import { Box } from "@material-ui/core"
-import Layout from "containers/Layout"
+import { Box } from '@material-ui/core'
+import Layout from 'containers/Layout'
 
-import FavoriteList from "./FavoriteList"
+import FavoriteList from './FavoriteList'
 
 const FavoritePage = () => {
-    return (<Layout withSearchBox={true}>
-        <Box mt={9}>
-            <FavoriteList />
-        </Box>
-    </Layout>)
+  return (
+    <Layout withSearchBox={true}>
+      <Box mt={9}>
+        <FavoriteList />
+      </Box>
+    </Layout>
+  )
 }
 export default FavoritePage

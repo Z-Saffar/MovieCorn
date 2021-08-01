@@ -1,1 +1,1 @@
-export { default } from "./IconButtonRouter"
+export { default } from './IconButtonRouter'
