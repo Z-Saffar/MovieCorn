@@ -6,8 +6,8 @@ import { WatchListProvider } from "../context/watchList.context"
 
 
 const Layout: FC<{ withSearchBox: boolean }> = ({ children, withSearchBox = false }) => {
-    const favoriteList = JSON.parse(localStorage.getItem("favoriteList") ?? '[]')
-    const watchList = JSON.parse(localStorage.getItem("watchList") ?? '[]')
+    const favoriteList = JSON.parse(localStorage.getItem("favoriteList") ?? '{}')
+    const watchList = JSON.parse(localStorage.getItem("watchList") ?? '{}')
 
     return (
         <FavoriteProvider value={{

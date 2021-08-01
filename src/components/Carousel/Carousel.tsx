@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@material-ui/core';
+import { Box, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
 import React, { VFC } from 'react';
 import ReactCarousel, { CarouselProps } from 'react-material-ui-carousel';
 import { TopRated } from '../../containers/home-page/types';
@@ -9,11 +9,12 @@ export interface ICarouselProps extends CarouselProps {
     items?: TopRated[]
 }
 const Carousel: VFC<ICarouselProps> = (props) => {
+    const classes = useStyles()
     const { items, ...others } = props
 
     return (
-        <Box >
-            {!items && <CircularProgress />}
+        <Box className={classes.root}>
+            {!items && <CircularProgress classes={{ root: classes.progress }} />}
             <ReactCarousel
                 animation='slide'
                 {...others}
@@ -31,3 +32,25 @@ const Carousel: VFC<ICarouselProps> = (props) => {
 
 
 export default Carousel
+
+
+const useStyles = makeStyles((theme: Theme) => {
+    const { breakpoints: { up }, spacing, palette } = theme
+    return createStyles({
+        root: {
+            position: 'relative',
+            minHeight: 400
+        },
+        progress: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            margin: 'auto',
+        },
+
+
+    });
+},
+);

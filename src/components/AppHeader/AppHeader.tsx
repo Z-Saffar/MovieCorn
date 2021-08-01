@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { Bookmark, Favorite } from '@material-ui/icons';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { VFC } from 'react';
-import { useEffect } from 'react';
 import { useFavoriteContext } from '../../context/favorite.context';
 import { useWatchListContext } from '../../context/watchList.context';
 import { ReactComponent as MovieCornIcon } from '../../logo.svg';
@@ -46,13 +45,13 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <Badge badgeContent={favoriteContextList.length} color="secondary" className={classes.menuIcon}>
+                <Badge badgeContent={Object.keys(favoriteContextList).length} color="secondary" className={classes.menuIcon}>
                     <Favorite />
                 </Badge>
                 <Typography>my favorite</Typography>
             </MenuItem>
             <MenuItem>
-                <Badge badgeContent={watchListInContext.length} color="secondary" className={classes.menuIcon} >
+                <Badge badgeContent={Object.keys(watchListInContext).length} color="secondary" className={classes.menuIcon} >
                     <Bookmark />
                 </Badge>
                 <Typography>watchlist</Typography>
@@ -76,12 +75,12 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
                     </div>
                     <div className={classes.sectionDesktop}>
                         <IconButtonRouter aria-label="show favorite movies" to='/myFavorite' className={classes.IconButton}>
-                            <Badge badgeContent={favoriteContextList.length} color="secondary">
+                            <Badge badgeContent={Object.keys(favoriteContextList).length} color="secondary">
                                 <Favorite />
                             </Badge>
                         </IconButtonRouter>
                         <IconButtonRouter aria-label="show watchlist" to='/watchlist' className={classes.IconButton}>
-                            <Badge badgeContent={watchListInContext.length} color="secondary">
+                            <Badge badgeContent={Object.keys(watchListInContext).length} color="secondary">
                                 <Bookmark />
                             </Badge>
                         </IconButtonRouter>

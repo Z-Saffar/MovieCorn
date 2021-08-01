@@ -13,66 +13,63 @@ import React, { useCallback, useState, VFC } from "react"
 import { useEffect } from "react"
 import { useFavoriteContext } from "../../context/favorite.context"
 import { useWatchListContext } from "../../context/watchList.context"
+import { MovieCardProps } from "./types"
 
-export interface MovieCardProps {
-  title: string
-  year: Date
-  rate: number
-  rank: number
-  description: string
-  imageUrl: string
-  id: number
-}
 
-const MovieCard: VFC<MovieCardProps> = ({
-  description,
-  imageUrl,
-  rate,
-  rank,
-  title,
-  year,
-  id
-}) => {
+
+const MovieCard: VFC<MovieCardProps> = (props) => {
+  const {
+    description,
+    imageUrl,
+    rate,
+    rank,
+    title,
+    year,
+    id
+  } = props
   const classes = useStyles()
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInWatchList, setIsInWatchList] = useState(false)
   const { setFavoriteContextList, favoriteContextList } = useFavoriteContext()
   const { setWatchListInContext, watchListInContext } = useWatchListContext()
 
-  const handleFavorite = useCallback((movieId: number) => {
-    const existingFavorite: number[] = JSON.parse(localStorage.getItem('favoriteList') ?? '[]')
-    const index = existingFavorite.indexOf(movieId);
-    if (index > -1) {
-      existingFavorite.splice(index, 1);
+  const handleFavorite = useCallback((item: MovieCardProps) => {
+    const existingFavorite: { [key: number]: MovieCardProps } = JSON.parse(localStorage.getItem('favoriteList') ?? '{}')
+    let newFavorite = { ...existingFavorite }
+    const existItem = Object.keys(existingFavorite).includes((item.id).toString())
+    if (existItem) {
+      delete newFavorite[item.id]
     } else {
-      existingFavorite.push(id)
+      newFavorite[item.id] = item
     }
-    setFavoriteContextList(existingFavorite)
-    localStorage.setItem("favoriteList", JSON.stringify(existingFavorite));
+    setFavoriteContextList(newFavorite)
+    localStorage.setItem("favoriteList", JSON.stringify(newFavorite));
     setIsFavorite(!isFavorite)
-  }, [id, isFavorite, setFavoriteContextList])
+  }, [isFavorite, setFavoriteContextList])
 
-  const handleWatchList = useCallback((movieId: number) => {
-    const existingWatchlist: number[] = JSON.parse(localStorage.getItem('watchList') ?? '[]')
-    const index = existingWatchlist.indexOf(movieId);
-    if (index > -1) {
-      existingWatchlist.splice(index, 1);
+  const handleWatchList = useCallback((item: MovieCardProps) => {
+    const existingWatchList: { [key: number]: MovieCardProps } = JSON.parse(localStorage.getItem('watchList') ?? '{}')
+    let newWatchList = { ...existingWatchList }
+    const existItem = Object.keys(existingWatchList).includes((item.id).toString())
+
+    if (existItem) {
+      delete newWatchList[item.id]
     } else {
-      existingWatchlist.push(id)
+      newWatchList[item.id] = item
     }
-    setWatchListInContext(existingWatchlist)
-    localStorage.setItem("watchList", JSON.stringify(existingWatchlist));
+    setWatchListInContext(newWatchList)
+    localStorage.setItem("watchList", JSON.stringify(newWatchList));
 
     setIsInWatchList(!isInWatchList)
-  }, [id, isInWatchList, setWatchListInContext])
+  }, [isInWatchList, setWatchListInContext])
 
   useEffect(() => {
-    const favIndex = favoriteContextList.indexOf(id)
-    if (favIndex > -1) {
+    const existFavItem = Object.keys(favoriteContextList).includes((id).toString())
+    if (existFavItem) {
       setIsFavorite(true)
     }
-    const watchIndex = watchListInContext.indexOf(id)
-    if (watchIndex > -1) {
+    const existWatchItem = Object.keys(watchListInContext).includes((id).toString())
+    if (existWatchItem) {
       setIsInWatchList(true)
     }
   }, [])
@@ -87,11 +84,11 @@ const MovieCard: VFC<MovieCardProps> = ({
                 <img className={classes.img} alt="complex" src={imageUrl} />
               </ButtonBase>
               <div className={classes.iconButtons}>
-                <IconButton onClick={() => { handleFavorite(id) }}>
+                <IconButton onClick={() => { handleFavorite({ ...props }) }}>
                   {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
                     <FavoriteBorderRoundedIcon color='secondary' />}
                 </IconButton>
-                <IconButton onClick={() => { handleWatchList(id) }} >
+                <IconButton onClick={() => { handleWatchList({ ...props }) }} >
                   {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
                     <BookmarkBorderRoundedIcon color='primary' />}
                 </IconButton>
@@ -122,11 +119,11 @@ const MovieCard: VFC<MovieCardProps> = ({
             </Grid>
             <Hidden smDown>
               <Grid item>
-                <IconButton onClick={() => { handleFavorite(id) }}>
+                <IconButton onClick={() => { handleFavorite({ ...props }) }}>
                   {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
                     <FavoriteBorderRoundedIcon color='secondary' />}
                 </IconButton>
-                <IconButton onClick={() => { handleWatchList(id) }}>
+                <IconButton onClick={() => { handleWatchList({ ...props }) }}>
                   {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
                     <BookmarkBorderRoundedIcon color='primary' />}
                 </IconButton>
