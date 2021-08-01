@@ -1,8 +1,8 @@
 import { Box, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { MovieResult } from 'containers/home-page/types';
+import { getAbsoluteImageURL } from 'helper';
 import React, { VFC } from 'react';
 import ReactCarousel, { CarouselProps } from 'react-material-ui-carousel';
-import { MovieResult } from '../../containers/home-page/types';
-import { getAbsoluteImageURL } from '../../helper';
 import CarouselItem from './CarouselItem';
 
 export interface ICarouselProps extends CarouselProps {

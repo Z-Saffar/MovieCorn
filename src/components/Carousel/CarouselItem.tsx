@@ -1,4 +1,4 @@
-import { Box, Button, Paper } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import { VFC } from "react"
 export interface ICarouselItemProps {
     imageUrl: string

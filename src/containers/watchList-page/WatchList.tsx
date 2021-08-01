@@ -1,6 +1,6 @@
 import { Box, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core"
-import MovieCard from "../../components/MovieCard/MovieCard"
-import { useWatchListContext } from "../../context/watchList.context"
+import MovieCard from "components/MovieCard"
+import { useWatchListContext } from "context/watchList.context"
 
 const WatchList = () => {
     const classes = useStyles()
@@ -31,6 +31,5 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         justifyContent: 'center',
         alignItems: 'center'
     },
-
 }),
 );

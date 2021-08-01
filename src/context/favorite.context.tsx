@@ -1,7 +1,7 @@
+import { MovieCardProps } from 'components/MovieCard/types'
 import React, { createContext, useContext } from 'react'
 import { useState } from 'react'
 import { FC } from 'react'
-import { MovieCardProps } from '../components/MovieCard/types'
 
 interface FavoriteContextType {
     favoriteContextList: { [key: number]: MovieCardProps },

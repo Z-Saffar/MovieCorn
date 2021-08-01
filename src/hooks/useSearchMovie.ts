@@ -1,6 +1,6 @@
 import { apis } from "api/axiosClient"
-import React, { useState } from "react"
-import { MovieResult } from "../containers/home-page/types"
+import { MovieResult } from "containers/home-page/types"
+import { useCallback, useState } from "react"
 import { useQuery } from "./useQuery"
 
 const useLazySearchMovie = (): [
@@ -12,7 +12,7 @@ const useLazySearchMovie = (): [
   const [pageIndex, setPageIndex] = useState<number>(1)
   const query = useQuery()
 
-  const search = React.useCallback(
+  const search = useCallback(
     async (searchText: string) => {
       const { data } = await apis.searchData({ searchText, pageIndex })
       const queryParam = query.get("q")

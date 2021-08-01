@@ -1,10 +1,9 @@
 import { Box, Button, CircularProgress, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
-import * as React from 'react';
-import MovieCard from "../components/MovieCard/MovieCard";
-import { useQuery } from "../hooks/useQuery";
-import useLazySearchMovie from "../hooks/useSearchMovie";
 import Layout from "./Layout";
-import NoItemIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import { SentimentVeryDissatisfiedRounded as NoItemIcon } from '@material-ui/icons';
+import { useQuery } from 'hooks/useQuery';
+import useLazySearchMovie from 'hooks/useSearchMovie';
+import { useEffect } from 'react';
 
 const ResultPage = () => {
     const classes = useStyles()
@@ -12,7 +11,7 @@ const ResultPage = () => {
     const searchText = query.get('q') ?? "";
     const [search, movies, nextPage] = useLazySearchMovie()
 
-    React.useEffect(() => {
+    useEffect(() => {
         search(searchText);
     }, [searchText, search]);
 

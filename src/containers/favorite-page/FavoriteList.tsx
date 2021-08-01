@@ -1,6 +1,7 @@
 import { Grid, Typography, Box, createStyles, makeStyles, Theme } from "@material-ui/core"
-import MovieCard from "../../components/MovieCard/MovieCard"
-import { useFavoriteContext } from "../../context/favorite.context"
+import MovieCard from "components/MovieCard"
+import { useFavoriteContext } from "context/favorite.context"
+
 
 const FavoriteList = () => {
     const classes = useStyles()

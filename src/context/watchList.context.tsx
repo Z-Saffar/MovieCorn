@@ -1,6 +1,6 @@
+import { MovieCardProps } from 'components/MovieCard/types'
 import React, { createContext, useContext, useState } from 'react'
 import { FC } from 'react'
-import { MovieCardProps } from '../components/MovieCard/types'
 
 interface WatchlistContextType {
     watchListInContext: { [key: number]: MovieCardProps },

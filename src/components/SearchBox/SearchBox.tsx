@@ -1,5 +1,5 @@
 import { alpha, createStyles, IconButton, InputBase, makeStyles, Theme } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { SearchRounded as SearchIcon } from '@material-ui/icons';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 

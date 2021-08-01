@@ -1,28 +1,21 @@
-import { Box } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Bookmark, Favorite } from '@material-ui/icons';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import React, { VFC } from 'react';
+import { Box, Typography, MenuItem, Menu, Badge, AppBar, Toolbar, IconButton } from '@material-ui/core'
+import { Bookmark, Favorite, MoreVert } from '@material-ui/icons';
+import IconButtonRouter from 'components/IconButtonRouter';
+import SearchBox from 'components/SearchBox';
+import { useFavoriteContext } from 'context/favorite.context';
+import { useWatchListContext } from 'context/watchList.context';
+import React, { useState, VFC } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useFavoriteContext } from '../../context/favorite.context';
-import { useWatchListContext } from '../../context/watchList.context';
-import { ReactComponent as MovieCornIcon } from '../../logo.svg';
-import IconButtonRouter from '../IconButtonRouter/IconButtonRouter';
-import SearchBox from '../SearchBox/SearchBox';
+import { ReactComponent as MovieCornIcon } from 'src/logo.svg';
+
 
 interface IAppHeaderProps {
     hasSearchBox: boolean
 }
 const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
     const classes = useStyles();
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const { favoriteContextList } = useFavoriteContext()
     const { watchListInContext } = useWatchListContext()
@@ -102,7 +95,7 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
                             onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
-                            <MoreIcon />
+                            <MoreVert />
                         </IconButton>
                     </div>
                 </Toolbar>

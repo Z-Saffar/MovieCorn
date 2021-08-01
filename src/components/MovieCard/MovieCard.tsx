@@ -1,18 +1,17 @@
-import { Box, Hidden, IconButton } from "@material-ui/core"
-import ButtonBase from "@material-ui/core/ButtonBase"
-import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
+import { Box, Hidden, IconButton, Paper, Grid, ButtonBase, Typography } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography"
-import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded'
-import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded'
-import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded'
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded'
-import StarIcon from '@material-ui/icons/Star'
+import {
+  BookmarkBorderRounded,
+  BookmarkRounded,
+  StarRounded,
+  FavoriteBorderRounded,
+  FavoriteRounded
+} from '@material-ui/icons'
+import { useFavoriteContext } from "context/favorite.context"
+import { useWatchListContext } from "context/watchList.context"
+import { getAbsoluteImageURL } from "helper"
 import React, { useCallback, useEffect, useState, VFC } from "react"
-import { useFavoriteContext } from "../../context/favorite.context"
-import { useWatchListContext } from "../../context/watchList.context"
-import { getAbsoluteImageURL } from "../../helper"
+
 import { MovieCardProps } from "./types"
 
 const MovieCard: VFC<MovieCardProps> = (props) => {
@@ -84,12 +83,12 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
               </ButtonBase>
               <div className={classes.iconButtons}>
                 <IconButton onClick={() => { handleFavorite({ ...props }) }}>
-                  {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
-                    <FavoriteBorderRoundedIcon color='secondary' />}
+                  {isFavorite ? <FavoriteRounded color='secondary' /> :
+                    <FavoriteBorderRounded color='secondary' />}
                 </IconButton>
                 <IconButton onClick={() => { handleWatchList({ ...props }) }} >
-                  {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
-                    <BookmarkBorderRoundedIcon color='primary' />}
+                  {isInWatchList ? <BookmarkRounded color='primary' /> :
+                    <BookmarkBorderRounded color='primary' />}
                 </IconButton>
               </div>
             </Grid>
@@ -108,7 +107,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
                   {title} - ({new Date(year).getFullYear()})
                 </Typography>
                 <Box display='flex' alignItems='flex-end' >
-                  <StarIcon classes={{ root: classes.starIcon }} />
+                  <StarRounded classes={{ root: classes.starIcon }} />
                   <Typography variant="body2" color="textSecondary">
                     {rank}
                   </Typography>
@@ -121,12 +120,12 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
             <Hidden smDown>
               <Grid item>
                 <IconButton onClick={() => { handleFavorite({ ...props }) }}>
-                  {isFavorite ? <FavoriteRoundedIcon color='secondary' /> :
-                    <FavoriteBorderRoundedIcon color='secondary' />}
+                  {isFavorite ? <FavoriteRounded color='secondary' /> :
+                    <FavoriteBorderRounded color='secondary' />}
                 </IconButton>
                 <IconButton onClick={() => { handleWatchList({ ...props }) }}>
-                  {isInWatchList ? <BookmarkRoundedIcon color='primary' /> :
-                    <BookmarkBorderRoundedIcon color='primary' />}
+                  {isInWatchList ? <BookmarkRounded color='primary' /> :
+                    <BookmarkBorderRounded color='primary' />}
                 </IconButton>
               </Grid>
             </Hidden>

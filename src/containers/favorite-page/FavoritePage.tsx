@@ -1,5 +1,6 @@
 import { Box } from "@material-ui/core"
-import Layout from "../Layout"
+import Layout from "containers/Layout"
+
 import FavoriteList from "./FavoriteList"
 
 const FavoritePage = () => {

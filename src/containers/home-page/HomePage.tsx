@@ -1,7 +1,7 @@
 import { Box, createStyles, makeStyles, Theme } from "@material-ui/core"
-import Carousel from "../../components/Carousel/Carousel"
-import SearchBox from "../../components/SearchBox/SearchBox"
-import Layout from "../Layout"
+import Carousel from "components/Carousel/Carousel";
+import SearchBox from "components/SearchBox/SearchBox";
+import Layout from "containers/Layout";
 import { useTopRated } from "./hooks/useTopRated"
 
 const HomePage = () => {

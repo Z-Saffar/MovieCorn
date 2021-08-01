@@ -1,9 +1,8 @@
 import { Container, Grid } from "@material-ui/core"
+import AppHeader from "components/AppHeader"
+import { FavoriteProvider } from "context/favorite.context"
+import { WatchListProvider } from "context/watchList.context"
 import { FC } from "react"
-import AppHeader from "../components/AppHeader/AppHeader"
-import { FavoriteProvider } from "../context/favorite.context"
-import { WatchListProvider } from "../context/watchList.context"
-
 
 const Layout: FC<{ withSearchBox: boolean }> = ({ children, withSearchBox = false }) => {
     const favoriteList = JSON.parse(localStorage.getItem("favoriteList") ?? '{}')
