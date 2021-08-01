@@ -114,7 +114,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box textAlign='justify' mt={2}>
+              <Box textAlign='left' mt={2}>
                 <Typography variant="body1">{description}</Typography>
               </Box>
             </Grid>

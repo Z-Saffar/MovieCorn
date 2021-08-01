@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Bookmark, Favorite } from '@material-ui/icons';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { VFC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useFavoriteContext } from '../../context/favorite.context';
 import { useWatchListContext } from '../../context/watchList.context';
 import { ReactComponent as MovieCornIcon } from '../../logo.svg';
@@ -26,6 +26,7 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const { favoriteContextList } = useFavoriteContext()
     const { watchListInContext } = useWatchListContext()
+    const { push } = useHistory()
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
@@ -45,17 +46,21 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
+            <MenuItem onClick={() => {
+                push('/myFavorite')
+            }}>
                 <Badge badgeContent={Object.keys(favoriteContextList).length} color="secondary" className={classes.menuIcon}>
                     <Favorite />
                 </Badge>
-                <Typography>my favorite</Typography>
+                <Typography>My favorite</Typography>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => {
+                push('/watchlist')
+            }}>
                 <Badge badgeContent={Object.keys(watchListInContext).length} color="secondary" className={classes.menuIcon} >
                     <Bookmark />
                 </Badge>
-                <Typography>watchlist</Typography>
+                <Typography>Watchlist</Typography>
             </MenuItem>
         </Menu>
     );

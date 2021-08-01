@@ -9,12 +9,14 @@ const HomePage = () => {
     const { topRateData } = useTopRated();
     return (
         <Layout withSearchBox={false}>
-            <Carousel items={topRateData} />
-            <div className={classes.searchWrapper}>
-                <Box className={classes.searchInnerWrapper}>
-                    <SearchBox />
-                </Box>
-            </div>
+            <Box mt={8}>
+                <Carousel items={topRateData} />
+                <div className={classes.searchWrapper}>
+                    <Box className={classes.searchInnerWrapper}>
+                        <SearchBox />
+                    </Box>
+                </div>
+            </Box>
         </Layout>
     )
 }

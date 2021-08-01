@@ -18,10 +18,10 @@ const Layout: FC<{ withSearchBox: boolean }> = ({ children, withSearchBox = fals
                 watchListInContext: watchList,
                 setWatchListInContext: () => { }
             }}>
-                <Container maxWidth="xl">
+                <Container maxWidth="xl" >
                     <AppHeader hasSearchBox={withSearchBox} />
                     <Grid container justifyContent='center'>
-                        <Grid item xs={10} >
+                        <Grid item xs={12} md={10} >
                             {children}
                         </Grid>
                     </Grid>
