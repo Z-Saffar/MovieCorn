@@ -1,7 +1,6 @@
 import { Box, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
 import * as React from 'react';
 import MovieCard from "../components/MovieCard/MovieCard";
-import { getAbsoluteImageURL } from "../helper";
 import { useQuery } from "../hooks/useQuery";
 import useLazySearchMovie from "../hooks/useSearchMovie";
 import Layout from "./Layout";
@@ -17,11 +16,12 @@ const ResultPage = () => {
     }, [searchText, search]);
 
     return (<Layout withSearchBox={true}>
-        {
-            movies ? movies.map((item) => {
-                return <Box mt={4}>
-                    <MovieCard description={item.overview}
-                        imageUrl={getAbsoluteImageURL(item.poster_path, 500)}
+        <Box mt={2}>
+            {
+                movies ? movies.map((item) => {
+                    return <MovieCard description={item.overview}
+                        imageUrl={item.poster_path}
+                        imageWidth={500}
                         rank={item.vote_average}
                         rate={5}
                         title={item.title}
@@ -29,12 +29,12 @@ const ResultPage = () => {
                         id={item.id}
                         key={item.id}
                     />
-                </Box>
-            }) :
-                <Box minHeight={300} position='relative'>
-                    <CircularProgress classes={{ root: classes.progress }} />
-                </Box>
-        }
+                }) :
+                    <Box minHeight={300} position='relative'>
+                        <CircularProgress classes={{ root: classes.progress }} />
+                    </Box>
+            }
+        </Box>
     </Layout>)
 }
 export default ResultPage

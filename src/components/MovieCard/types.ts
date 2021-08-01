@@ -5,5 +5,6 @@ export interface MovieCardProps {
   rank: number
   description: string
   imageUrl: string
+  imageWidth?: number
   id: number
 }

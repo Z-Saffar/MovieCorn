@@ -13,6 +13,7 @@ import React, { useCallback, useState, VFC } from "react"
 import { useEffect } from "react"
 import { useFavoriteContext } from "../../context/favorite.context"
 import { useWatchListContext } from "../../context/watchList.context"
+import { getAbsoluteImageURL } from "../../helper"
 import { MovieCardProps } from "./types"
 
 
@@ -21,6 +22,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
   const {
     description,
     imageUrl,
+    imageWidth,
     rate,
     rank,
     title,
@@ -72,7 +74,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
     if (existWatchItem) {
       setIsInWatchList(true)
     }
-  }, [])
+  }, [favoriteContextList, id, watchListInContext])
 
   return (
     <div className={classes.root}>
@@ -81,7 +83,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
           <Hidden mdUp>
             <Grid item className={classes.imageWrapper}>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="complex" src={imageUrl} />
+                <img className={classes.img} alt="complex" src={getAbsoluteImageURL(imageUrl, imageWidth)} />
               </ButtonBase>
               <div className={classes.iconButtons}>
                 <IconButton onClick={() => { handleFavorite({ ...props }) }}>
@@ -99,7 +101,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
             <Hidden smDown>
               <Grid item>
                 <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt="complex" src={imageUrl} />
+                  <img className={classes.img} alt="complex" src={getAbsoluteImageURL(imageUrl, imageWidth)} />
                 </ButtonBase>
               </Grid>
             </Hidden>

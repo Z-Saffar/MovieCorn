@@ -2,10 +2,10 @@ import React from "react";
 import {
     Route, Switch
 } from "react-router-dom";
-import FavoriteList from "./containers/FavoriteList";
+import FavoritePage from "./containers/favorite-page/FavoritePage";
 import HomePage from "./containers/home-page/HomePage";
 import ResultPage from "./containers/ResultPage";
-import WatchList from "./containers/WatchList";
+import WatchListPage from "./containers/watchList-page/WatchListPage";
 
 const AppRouter = () => {
     return (
@@ -17,10 +17,10 @@ const AppRouter = () => {
                 <ResultPage />
             </Route>
             <Route path="/myFavorite" exact>
-                <FavoriteList />
+                <FavoritePage />
             </Route>
             <Route path="/watchlist" exact>
-                <WatchList />
+                <WatchListPage />
             </Route>
         </Switch>
     );
