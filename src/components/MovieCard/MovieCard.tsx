@@ -9,13 +9,11 @@ import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded'
 import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded'
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded'
 import Rating from '@material-ui/lab/Rating'
-import React, { useCallback, useState, VFC } from "react"
-import { useEffect } from "react"
+import React, { useCallback, useEffect, useState, VFC } from "react"
 import { useFavoriteContext } from "../../context/favorite.context"
 import { useWatchListContext } from "../../context/watchList.context"
 import { getAbsoluteImageURL } from "../../helper"
 import { MovieCardProps } from "./types"
-
 
 
 const MovieCard: VFC<MovieCardProps> = (props) => {
@@ -83,7 +81,8 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
           <Hidden mdUp>
             <Grid item className={classes.imageWrapper}>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="complex" src={getAbsoluteImageURL(imageUrl, imageWidth)} />
+                <img className={classes.img} alt="complex"
+                  src={imageUrl ? getAbsoluteImageURL(imageUrl, imageWidth) : process.env.PUBLIC_URL + '/images/noImage.png'} />
               </ButtonBase>
               <div className={classes.iconButtons}>
                 <IconButton onClick={() => { handleFavorite({ ...props }) }}>

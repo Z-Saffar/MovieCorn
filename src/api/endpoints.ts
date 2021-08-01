@@ -1,4 +1,4 @@
 export enum Endpoints {
-  TOP_RATED = "/movie/top_rated",
+  TOP_RATED = "/movie/now_playing",
   SEARCH = "/search/movie",
 }
