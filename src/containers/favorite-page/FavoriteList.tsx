@@ -13,7 +13,6 @@ const FavoriteList = () => {
                     const movieObj = item[1]
                     return <Grid item xs={12} key={movieObj.id}><MovieCard {...movieObj} /></Grid>
                 })}
-
             </Grid>
     )
 

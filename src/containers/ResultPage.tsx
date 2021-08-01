@@ -16,7 +16,7 @@ const ResultPage = () => {
     }, [searchText, search]);
 
     return (<Layout withSearchBox={true}>
-        <Box mt={2}>
+        <Box mt={10}>
             {
                 movies ? movies.map((item) => {
                     return <MovieCard description={item.overview}

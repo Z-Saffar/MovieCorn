@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Bookmark, Favorite } from '@material-ui/icons';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import React, { VFC } from 'react';
+import { Link } from 'react-router-dom';
 import { useFavoriteContext } from '../../context/favorite.context';
 import { useWatchListContext } from '../../context/watchList.context';
 import { ReactComponent as MovieCornIcon } from '../../logo.svg';
@@ -61,13 +62,16 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
-                <Toolbar>
-                    <MovieCornIcon width={46} height={46} className={classes.logo} />
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        MovieCorn
-                    </Typography>
-
+            <AppBar position="fixed">
+                <Toolbar className={classes.logoWrapper}>
+                    <Link to='/'>
+                        <Box display='flex' alignItems='center'>
+                            <MovieCornIcon width={46} height={46} className={classes.logo} />
+                            <Typography className={classes.title} variant="h6" noWrap>
+                                MovieCorn
+                            </Typography>
+                        </Box>
+                    </Link>
                     <div className={classes.grow}>
                         <Box className={classes.searchBoxWrapper}>
                             {hasSearchBox && <SearchBox />}
@@ -110,6 +114,11 @@ const useStyles = makeStyles((theme: Theme) => {
         grow: {
             flexGrow: 1,
         },
+        logoWrapper: {
+            '& a': {
+                textDecoration: 'none'
+            }
+        },
         logo: {
             margin: spacing(1)
         },
@@ -131,6 +140,8 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         title: {
             display: 'none',
+            color: palette.grey[100],
+            textDecoration: 'none',
             [up('sm')]: {
                 display: 'block',
             },
