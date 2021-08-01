@@ -4,6 +4,7 @@ import { SentimentVeryDissatisfiedRounded as NoItemIcon } from '@material-ui/ico
 import { useQuery } from 'hooks/useQuery';
 import useLazySearchMovie from 'hooks/useSearchMovie';
 import { useEffect } from 'react';
+import MovieCard from 'components/MovieCard';
 
 const ResultPage = () => {
     const classes = useStyles()
@@ -40,7 +41,6 @@ const ResultPage = () => {
                                 imageUrl={item.poster_path}
                                 imageWidth={500}
                                 rank={item.vote_average}
-                                rate={5}
                                 title={item.title}
                                 year={item.release_date}
                                 id={item.id}

@@ -1,10 +1,10 @@
 import { alpha, createStyles, IconButton, InputBase, makeStyles, Theme } from '@material-ui/core';
 import { SearchRounded as SearchIcon } from '@material-ui/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const SearchBox = () => {
-    const [searchText, setSearchText] = React.useState<string>();
+    const [searchText, setSearchText] = useState<string>();
     const { push } = useHistory()
     const classes = useStyles()
     const handleSearch = (event: React.FormEvent) => {

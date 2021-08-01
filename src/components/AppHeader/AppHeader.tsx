@@ -7,7 +7,7 @@ import { useFavoriteContext } from 'context/favorite.context';
 import { useWatchListContext } from 'context/watchList.context';
 import React, { useState, VFC } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { ReactComponent as MovieCornIcon } from 'src/logo.svg';
+import { ReactComponent as MovieCornIcon } from '../../logo.svg';
 
 
 interface IAppHeaderProps {
