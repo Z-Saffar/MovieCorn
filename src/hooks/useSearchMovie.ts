@@ -1,7 +1,6 @@
+import { apis } from "api/axiosClient"
 import React, { useState } from "react"
-import { Endpoints } from "../api/endpoints"
-import { AxiosSingleton } from "../api/fetcher-factory"
-import { MovieResult, Pagination } from "../containers/home-page/types"
+import { MovieResult } from "../containers/home-page/types"
 import { useQuery } from "./useQuery"
 
 const useLazySearchMovie = (): [
@@ -15,17 +14,7 @@ const useLazySearchMovie = (): [
 
   const search = React.useCallback(
     async (searchText: string) => {
-      const { data } = await AxiosSingleton.getInstance().get<
-        Pagination<MovieResult>
-      >(Endpoints.SEARCH, {
-        params: {
-          api_key: process.env.REACT_APP_TMDB_API_KEY,
-          language: "en_US",
-          include_adult: false,
-          query: searchText,
-          page: pageIndex,
-        },
-      })
+      const { data } = await apis.searchData({ searchText, pageIndex })
       const queryParam = query.get("q")
       if (movies?.length && queryParam === searchText) {
         setMovies([...movies, ...data.results])

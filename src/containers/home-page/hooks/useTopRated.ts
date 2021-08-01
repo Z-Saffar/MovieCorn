@@ -1,17 +1,12 @@
+import { apis } from "api/axiosClient"
 import * as React from "react"
-import { Endpoints } from "../../../api/endpoints"
-import { AxiosSingleton } from "../../../api/fetcher-factory"
-import { MovieResult, Pagination } from "../types"
+import { MovieResult } from "../types"
 
 export function useTopRated() {
   const [topRateData, setTopRateData] = React.useState<MovieResult[]>()
   React.useEffect(() => {
     const apiCall = async () => {
-      const { data } = await AxiosSingleton.getInstance().get<
-        Pagination<MovieResult>
-      >(Endpoints.TOP_RATED, {
-        params: { api_key: process.env.REACT_APP_TMDB_API_KEY, language: "en_US" },
-      })
+      const { data } = await apis.getLatestData()
       setTopRateData(data.results)
     }
     apiCall()
