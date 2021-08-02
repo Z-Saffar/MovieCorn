@@ -1,14 +1,10 @@
-import { MovieCardProps } from 'components/MovieCard/types'
-import React, { createContext, useContext } from 'react'
-import { useState } from 'react'
-import { FC } from 'react'
+import { StoredData } from 'components/MovieCard/types'
+import React, { createContext, FC, useContext, useState } from 'react'
 
 interface FavoriteContextType {
-  favoriteContextList: { [key: number]: MovieCardProps }
+  favoriteContextList: StoredData
   setFavoriteContextList: React.Dispatch<
-    React.SetStateAction<{
-      [key: number]: MovieCardProps
-    }>
+    React.SetStateAction<StoredData>
   >
 }
 export interface FavoriteProviderProps {
@@ -18,9 +14,7 @@ export interface FavoriteProviderProps {
 export const FavoriteContext = createContext<FavoriteContextType | null>(null)
 
 const FavoriteProvider: FC<FavoriteProviderProps> = ({ children, value }) => {
-  const [favoriteContextList, setFavoriteContextList] = useState<{
-    [key: number]: MovieCardProps
-  }>(value.favoriteContextList)
+  const [favoriteContextList, setFavoriteContextList] = useState<StoredData>(value.favoriteContextList)
   return (
     <FavoriteContext.Provider
       value={{

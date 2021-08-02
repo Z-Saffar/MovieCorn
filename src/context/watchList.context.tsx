@@ -1,13 +1,10 @@
-import { MovieCardProps } from 'components/MovieCard/types'
-import React, { createContext, useContext, useState } from 'react'
-import { FC } from 'react'
+import { StoredData } from 'components/MovieCard/types'
+import React, { createContext, FC, useContext, useState } from 'react'
 
 interface WatchlistContextType {
-  watchListInContext: { [key: number]: MovieCardProps }
+  watchListInContext: StoredData
   setWatchListInContext: React.Dispatch<
-    React.SetStateAction<{
-      [key: number]: MovieCardProps
-    }>
+    React.SetStateAction<StoredData>
   >
 }
 interface WatchListProviderProps {
@@ -17,9 +14,7 @@ interface WatchListProviderProps {
 export const WatchListContext = createContext<WatchlistContextType | null>(null)
 
 const WatchListProvider: FC<WatchListProviderProps> = ({ children, value }) => {
-  const [watchListInContext, setWatchListInContext] = useState<{
-    [key: number]: MovieCardProps
-  }>(value.watchListInContext)
+  const [watchListInContext, setWatchListInContext] = useState<StoredData>(value.watchListInContext)
 
   return (
     <WatchListContext.Provider

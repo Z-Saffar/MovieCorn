@@ -1,43 +1,29 @@
 import {
-  Grid,
-  Typography,
   Box,
-  createStyles,
-  makeStyles,
-  Theme,
+  Grid
 } from '@material-ui/core'
 import MovieCard from 'components/MovieCard'
+import NoItem from 'components/NoItem'
 import { useFavoriteContext } from 'context/favorite.context'
 
 const FavoriteList = () => {
-  const classes = useStyles()
   const { favoriteContextList } = useFavoriteContext()
-  return Object.keys(favoriteContextList).length === 0 ? (
-    <Box className={classes.noItemWrapper}>
-      <Typography variant="h5"> no item in your favorite list!!!</Typography>
-    </Box>
+  const favoriteCount = Object.keys(favoriteContextList).length
+  return favoriteCount === 0 ? (
+    <NoItem text='No item in your favorite list!!!' />
   ) : (
-    <Grid container>
-      {Object.entries(favoriteContextList).map((item) => {
-        const movieObj = item[1]
-        return (
-          <Grid item xs={12} key={movieObj.id}>
-            <MovieCard {...movieObj} />
-          </Grid>
-        )
-      })}
-    </Grid>
+    <Box mt={4} mb={8}>
+      <Grid container>
+        {Object.entries(favoriteContextList).map(([id, movieObj]) => {
+          return (
+            <Grid item xs={12} key={movieObj.id}>
+              <MovieCard item={movieObj} />
+            </Grid>
+          )
+        })}
+      </Grid>
+    </Box>
   )
 }
 export default FavoriteList
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    noItemWrapper: {
-      height: 400,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  })
-)

@@ -15,59 +15,67 @@ import {
   FavoriteBorderRounded,
   FavoriteRounded,
 } from '@material-ui/icons'
+import { FAVORITE_LIST, WATCH_LIST } from 'constant/constant'
 import { useFavoriteContext } from 'context/favorite.context'
 import { useWatchListContext } from 'context/watchList.context'
 import { getAbsoluteImageURL } from 'helper'
 import React, { useCallback, useEffect, useState, VFC } from 'react'
 
-import { MovieCardProps } from './types'
+import { MovieCardProps, StoredData } from './types'
 
-const MovieCard: VFC<MovieCardProps> = (props) => {
-  const { description, imageUrl, imageWidth, rank, title, year, id } = props
+const MovieCard: VFC<MovieCardProps> = ({ item }) => {
+  const { description, imageUrl, imageWidth, rank, title, year, id } = item
   const classes = useStyles()
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInWatchList, setIsInWatchList] = useState(false)
   const { setFavoriteContextList, favoriteContextList } = useFavoriteContext()
   const { setWatchListInContext, watchListInContext } = useWatchListContext()
+  const imageSrc = !!imageUrl
+    ? getAbsoluteImageURL(imageUrl, imageWidth)
+    : process.env.PUBLIC_URL + '/images/noImage.png'
 
   const handleFavorite = useCallback(
-    (item: MovieCardProps) => {
-      const existingFavorite: { [key: number]: MovieCardProps } = JSON.parse(
-        localStorage.getItem('favoriteList') ?? '{}'
+    () => {
+      const existingFavorite: StoredData = JSON.parse(
+        localStorage.getItem(FAVORITE_LIST) ?? '{}'
       )
-      let newFavorite = { ...existingFavorite }
-      const existItem = Object.keys(existingFavorite).includes(item.id.toString())
+
+      const existItem = Object.keys(existingFavorite).includes(id.toString())
+      let newFavoriteMap: StoredData;
       if (existItem) {
-        delete newFavorite[item.id]
+        const { [id]: _, ...rest } = existingFavorite
+        newFavoriteMap = { ...rest }
       } else {
-        newFavorite[item.id] = item
+        newFavoriteMap = { ...existingFavorite, [id]: { ...item } }
       }
-      setFavoriteContextList(newFavorite)
-      localStorage.setItem('favoriteList', JSON.stringify(newFavorite))
+      setFavoriteContextList(newFavoriteMap)
+      localStorage.setItem(FAVORITE_LIST, JSON.stringify(newFavoriteMap))
       setIsFavorite(!isFavorite)
     },
-    [isFavorite, setFavoriteContextList]
+    [id, isFavorite, item, setFavoriteContextList]
   )
 
   const handleWatchList = useCallback(
-    (item: MovieCardProps) => {
-      const existingWatchList: { [key: number]: MovieCardProps } = JSON.parse(
-        localStorage.getItem('watchList') ?? '{}'
+    () => {
+      const existingWatchList: StoredData = JSON.parse(
+        localStorage.getItem(WATCH_LIST) ?? '{}'
       )
-      let newWatchList = { ...existingWatchList }
-      const existItem = Object.keys(existingWatchList).includes(item.id.toString())
+      const existItem = Object.keys(existingWatchList).includes(id.toString())
 
+      let newWatchListMap: StoredData;
       if (existItem) {
-        delete newWatchList[item.id]
+        const { [id]: _, ...rest } = existingWatchList
+        newWatchListMap = { ...rest }
       } else {
-        newWatchList[item.id] = item
+        newWatchListMap = { ...existingWatchList, [id]: { ...item } }
       }
-      setWatchListInContext(newWatchList)
-      localStorage.setItem('watchList', JSON.stringify(newWatchList))
+
+      setWatchListInContext(newWatchListMap)
+      localStorage.setItem(WATCH_LIST, JSON.stringify(newWatchListMap))
 
       setIsInWatchList(!isInWatchList)
     },
-    [isInWatchList, setWatchListInContext]
+    [id, isInWatchList, item, setWatchListInContext]
   )
 
   useEffect(() => {
@@ -80,9 +88,8 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
       setIsInWatchList(true)
     }
   }, [favoriteContextList, id, watchListInContext])
-  const imageSrc = !!imageUrl
-    ? getAbsoluteImageURL(imageUrl, imageWidth)
-    : process.env.PUBLIC_URL + '/images/noImage.png'
+
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -94,9 +101,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
               </ButtonBase>
               <div className={classes.iconButtons}>
                 <IconButton
-                  onClick={() => {
-                    handleFavorite({ ...props })
-                  }}
+                  onClick={handleFavorite}
                 >
                   {isFavorite ? (
                     <FavoriteRounded color="secondary" />
@@ -105,9 +110,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
                   )}
                 </IconButton>
                 <IconButton
-                  onClick={() => {
-                    handleWatchList({ ...props })
-                  }}
+                  onClick={handleWatchList}
                 >
                   {isInWatchList ? (
                     <BookmarkRounded color="primary" />
@@ -145,9 +148,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
             <Hidden smDown>
               <Grid item>
                 <IconButton
-                  onClick={() => {
-                    handleFavorite({ ...props })
-                  }}
+                  onClick={handleFavorite}
                 >
                   {isFavorite ? (
                     <FavoriteRounded color="secondary" />
@@ -156,9 +157,7 @@ const MovieCard: VFC<MovieCardProps> = (props) => {
                   )}
                 </IconButton>
                 <IconButton
-                  onClick={() => {
-                    handleWatchList({ ...props })
-                  }}
+                  onClick={handleWatchList}
                 >
                   {isInWatchList ? (
                     <BookmarkRounded color="primary" />

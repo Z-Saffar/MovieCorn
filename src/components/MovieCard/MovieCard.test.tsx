@@ -1,10 +1,10 @@
 import React from 'react'
 import { getAllByRole, render } from '@testing-library/react'
 import { build, fake } from '@jackfranklin/test-data-bot'
-import { MovieCardProps } from './types'
+import { Movie } from './types'
 import MovieCard from '.'
 
-const movieBuilder = build<MovieCardProps>('Movie', {
+const movieBuilder = build<Movie>('Movie', {
   fields: {
     description: fake((f) => f.lorem.paragraph(10)),
     imageUrl: fake((f) => f.image.imageUrl),
@@ -16,7 +16,7 @@ const movieBuilder = build<MovieCardProps>('Movie', {
 })
 test('renders MovieCard component', () => {
   const movie = movieBuilder()
-  const { container, getByText, getByRole, debug } = render(<MovieCard {...movie} />)
+  const { container, getByText, getByRole, debug } = render(<MovieCard item={movie} />)
 
   expect(getByRole('heading')).toHaveTextContent(`${movie.title} - (${movie.year})`)
   expect(getByText(movie.description)).toBeInTheDocument()

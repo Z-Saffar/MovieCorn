@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { MovieResult, Pagination } from 'containers/home-page/types'
 import { Endpoints } from './endpoints'
+
 interface SearchParamType {
   searchText: string
   pageIndex: number
@@ -10,7 +11,7 @@ export const Axios = axios.create({
 })
 
 export const apis = {
-  getLatestData: async () =>
+  getLatestData: () =>
     Axios.get<Pagination<MovieResult>>(Endpoints.TOP_RATED, {
       params: { api_key: process.env.REACT_APP_TMDB_API_KEY, language: 'en_US' },
     }),

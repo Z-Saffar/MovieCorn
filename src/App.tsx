@@ -1,11 +1,15 @@
-import React from 'react'
+import { localstorageInitialization } from 'helper'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 import AppRouter from './AppRouter'
-import useApp from './hooks/useLocalstorageInitialization'
 
 function App() {
-  useApp()
+
+  useEffect(() => {
+    localstorageInitialization()
+  }, [])
+
   return (
     <Router>
       <AppRouter />

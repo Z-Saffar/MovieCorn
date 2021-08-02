@@ -1,4 +1,4 @@
-export interface MovieCardProps {
+export interface Movie {
   title: string
   year: Date
   rank: number
@@ -7,3 +7,8 @@ export interface MovieCardProps {
   imageWidth?: number
   id: number
 }
+export interface MovieCardProps {
+  item: Movie
+}
+
+export type StoredData = Record<number, Movie>

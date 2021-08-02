@@ -22,10 +22,10 @@ const Carousel: VFC<ICarouselProps> = (props) => {
     <Box className={classes.root}>
       {!items && <CircularProgress classes={{ root: classes.progress }} />}
       <ReactCarousel animation="slide" {...others}>
-        {items?.slice(0, 5).map((item, i) => {
+        {items?.slice(0, 5).map((item) => {
           return (
             <CarouselItem
-              key={i}
+              key={item.id}
               title={item.title}
               imageUrl={getAbsoluteImageURL(item.backdrop_path, 1280)}
             />
