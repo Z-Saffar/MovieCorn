@@ -18,7 +18,7 @@ const ResultPage = () => {
   const classes = useStyles()
   const query = useQuery()
   const searchText = query.get('q') ?? ''
-  const [search, data] = useLazySearchMovie()
+  const [search, { data, loading }] = useLazySearchMovie()
   const [pageIndex, setPageIndex] = useState(1)
   const [movies, setMovies] = useState<MovieResult[]>();
 
@@ -26,20 +26,23 @@ const ResultPage = () => {
 
   useEffect(() => {
     if (searchText !== searchTextRef.current) {
-      setMovies([])
+      setMovies(undefined)
       searchTextRef.current = searchText;
+    } else {
+      search(searchText, pageIndex)
     }
-    search(searchText, pageIndex)
   }, [searchText, search, pageIndex])
 
   useEffect(() => {
-    setMovies((prev) => [...(prev ?? []), ...(data ?? [])])
+    if (data?.length) {
+      setMovies((prev) => [...(prev ?? []), ...(data ?? [])])
+    }
   }, [data])
 
   const handlePageIndex = () => {
     setPageIndex(pageIndex + 1)
   }
-  if (!movies) {
+  if (loading && !movies) {
     return (
       <Layout withSearchBox={true}>
         <Box minHeight={300} position="relative">
@@ -48,7 +51,6 @@ const ResultPage = () => {
       </Layout>
     )
   }
-
   return (
     <Layout withSearchBox={true}>
       {!movies?.length ? (
@@ -74,14 +76,19 @@ const ResultPage = () => {
               />
             )
           })}
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.loadMore}
-            onClick={handlePageIndex}
-          >
-            Load more ...
-          </Button>
+          <Box className={classes.loadMoreWrapper}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.loadMore}
+              onClick={handlePageIndex}
+              disabled={loading}
+
+            >
+              Load more ...
+            </Button>
+            {loading && <CircularProgress size={16} className={classes.buttonProgress} />}
+          </Box>
         </Box>
       )}
     </Layout>
@@ -99,9 +106,21 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       margin: 'auto',
     },
+    loadMoreWrapper: {
+      position: 'relative',
+      width: 'fit-content',
+      margin: 'auto'
+    },
     loadMore: {
       marginTop: theme.spacing(3),
       padding: theme.spacing(1, 4),
     },
+    buttonProgress: {
+      position: 'absolute',
+      top: '58%',
+      right: '10px',
+      color: theme.palette.grey[800]
+
+    }
   })
 )
