@@ -2,7 +2,7 @@ import { Box, createStyles, makeStyles, Theme, Typography } from "@material-ui/c
 import { SentimentVeryDissatisfiedRounded as NoItemIcon } from '@material-ui/icons'
 import { VFC } from "react"
 
-interface NoItemProps {
+export interface NoItemProps {
     text: string
 }
 
