@@ -14,14 +14,17 @@ const SearchBox = () => {
   const [searchText, setSearchText] = useState<string>()
   const { push } = useHistory()
   const classes = useStyles()
+
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault()
     push(`/search?q=${searchText}`)
   }
+
   return (
-    <form onSubmit={handleSearch}>
+    <form onSubmit={handleSearch} data-testid='searchForm'>
       <div className={classes.search}>
         <InputBase
+          defaultValue=''
           name="search-box"
           placeholder="Search movies …"
           classes={{
@@ -34,7 +37,7 @@ const SearchBox = () => {
             setSearchText(value)
           }}
         />
-        <IconButton type="submit" color="inherit" aria-label="search">
+        <IconButton type="submit" color="inherit" aria-label="search" onClick={handleSearch}>
           <SearchIcon />
         </IconButton>
       </div>
