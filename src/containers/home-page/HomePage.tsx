@@ -1,4 +1,4 @@
-import { Box, createStyles, makeStyles, Theme } from '@material-ui/core'
+import { Box, createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
 import Carousel from 'components/Carousel/Carousel'
 import SearchBox from 'components/SearchBox/SearchBox'
 import Layout from 'containers/Layout'
@@ -6,11 +6,15 @@ import { useTopRated } from './hooks/useTopRated'
 
 const HomePage = () => {
   const classes = useStyles()
-  const { topRateData } = useTopRated()
+  const { topRateData, error } = useTopRated()
+  console.log("🦎 ~ HomePage ~ error", error)
+
   return (
     <Layout withSearchBox={false}>
       <Box mt={8}>
-        <Carousel items={topRateData} />
+        {error ? <Typography>{error}</Typography> :
+          <Carousel items={topRateData} />
+        }
         <div className={classes.searchWrapper}>
           <Box className={classes.searchInnerWrapper}>
             <SearchBox />

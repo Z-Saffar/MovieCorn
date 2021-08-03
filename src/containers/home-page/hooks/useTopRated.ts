@@ -4,15 +4,17 @@ import { MovieResult } from '../types'
 
 export function useTopRated() {
   const [topRateData, setTopRateData] = useState<MovieResult[]>()
+  const [error, setError] = useState<string>('')
   useEffect(() => {
     const apiCall = async () => {
-      const { data } = await apis.getLatestData()
-      setTopRateData(data.results)
+      const result = await apis.getLatestData()
+      console.log('🦎 ~ apiCall ~ result', result)
     }
     apiCall()
   }, [])
 
   return {
     topRateData,
+    error,
   }
 }
