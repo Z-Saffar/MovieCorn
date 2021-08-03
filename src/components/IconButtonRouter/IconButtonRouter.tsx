@@ -2,7 +2,7 @@ import { IconButton, IconButtonProps } from '@material-ui/core'
 import React, { VFC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
-interface ButtonRouterProps extends IconButtonProps {
+export interface ButtonRouterProps extends IconButtonProps {
   to: string
 }
 
