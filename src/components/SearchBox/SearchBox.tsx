@@ -21,7 +21,7 @@ const SearchBox = () => {
   }
 
   return (
-    <form onSubmit={handleSearch} data-testid='searchForm'>
+    <form onSubmit={handleSearch} data-testid='searchForm' className={classes.root}>
       <div className={classes.search}>
         <InputBase
           defaultValue=''
@@ -48,11 +48,15 @@ export default SearchBox
 const useStyles = makeStyles((theme: Theme) => {
   const { spacing, palette, shape } = theme
   return createStyles({
+    root: {
+      backgroundColor: palette.grey[900]
+    },
     search: {
       position: 'relative',
       display: 'flex',
       borderRadius: shape.borderRadius,
       backgroundColor: alpha(palette.common.white, 0.15),
+      color: palette.common.white,
       '&:hover': {
         backgroundColor: alpha(palette.common.white, 0.25),
       },

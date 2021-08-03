@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            color: theme.palette.grey[100]
         },
         noItemIcon: {
             width: 48,

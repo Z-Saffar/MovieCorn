@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) => {
       borderRadius: shape.borderRadius,
       borderColor: palette.grey[500],
       width: '100%',
+      marginTop: spacing(3),
       padding: spacing(0.5, 0.5),
       [up('md')]: {
         width: '80%',
