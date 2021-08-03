@@ -25,6 +25,7 @@ import { MovieCardProps, StoredData } from './types'
 
 const MovieCard: VFC<MovieCardProps> = ({ item }) => {
   const { description, imageUrl, imageWidth, rank, title, year, id } = item
+
   const classes = useStyles()
   const [isFavorite, setIsFavorite] = useState(false)
   const [isInWatchList, setIsInWatchList] = useState(false)
@@ -34,49 +35,43 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
     ? getAbsoluteImageURL(imageUrl, imageWidth)
     : process.env.PUBLIC_URL + '/images/noImage.png'
 
-  const handleFavorite = useCallback(
-    () => {
-      const existingFavorite: StoredData = JSON.parse(
-        localStorage.getItem(FAVORITE_LIST) ?? '{}'
-      )
+  const handleFavorite = useCallback(() => {
+    const existingFavorite: StoredData = JSON.parse(
+      localStorage.getItem(FAVORITE_LIST) ?? '{}'
+    )
 
-      const existItem = Object.keys(existingFavorite).includes(id.toString())
-      let newFavoriteMap: StoredData;
-      if (existItem) {
-        const { [id]: _, ...rest } = existingFavorite
-        newFavoriteMap = { ...rest }
-      } else {
-        newFavoriteMap = { ...existingFavorite, [id]: { ...item } }
-      }
-      setFavoriteContextList(newFavoriteMap)
-      localStorage.setItem(FAVORITE_LIST, JSON.stringify(newFavoriteMap))
-      setIsFavorite(!isFavorite)
-    },
-    [id, isFavorite, item, setFavoriteContextList]
-  )
+    const existItem = Object.keys(existingFavorite).includes(id.toString())
+    let newFavoriteMap: StoredData
+    if (existItem) {
+      const { [id]: _, ...rest } = existingFavorite
+      newFavoriteMap = { ...rest }
+    } else {
+      newFavoriteMap = { ...existingFavorite, [id]: { ...item } }
+    }
+    setFavoriteContextList(newFavoriteMap)
+    localStorage.setItem(FAVORITE_LIST, JSON.stringify(newFavoriteMap))
+    setIsFavorite(!isFavorite)
+  }, [id, isFavorite, item, setFavoriteContextList])
 
-  const handleWatchList = useCallback(
-    () => {
-      const existingWatchList: StoredData = JSON.parse(
-        localStorage.getItem(WATCH_LIST) ?? '{}'
-      )
-      const existItem = Object.keys(existingWatchList).includes(id.toString())
+  const handleWatchList = useCallback(() => {
+    const existingWatchList: StoredData = JSON.parse(
+      localStorage.getItem(WATCH_LIST) ?? '{}'
+    )
+    const existItem = Object.keys(existingWatchList).includes(id.toString())
 
-      let newWatchListMap: StoredData;
-      if (existItem) {
-        const { [id]: _, ...rest } = existingWatchList
-        newWatchListMap = { ...rest }
-      } else {
-        newWatchListMap = { ...existingWatchList, [id]: { ...item } }
-      }
+    let newWatchListMap: StoredData
+    if (existItem) {
+      const { [id]: _, ...rest } = existingWatchList
+      newWatchListMap = { ...rest }
+    } else {
+      newWatchListMap = { ...existingWatchList, [id]: { ...item } }
+    }
 
-      setWatchListInContext(newWatchListMap)
-      localStorage.setItem(WATCH_LIST, JSON.stringify(newWatchListMap))
+    setWatchListInContext(newWatchListMap)
+    localStorage.setItem(WATCH_LIST, JSON.stringify(newWatchListMap))
 
-      setIsInWatchList(!isInWatchList)
-    },
-    [id, isInWatchList, item, setWatchListInContext]
-  )
+    setIsInWatchList(!isInWatchList)
+  }, [id, isInWatchList, item, setWatchListInContext])
 
   useEffect(() => {
     const existFavItem = Object.keys(favoriteContextList).includes(id.toString())
@@ -89,7 +84,6 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
     }
   }, [favoriteContextList, id, watchListInContext])
 
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -100,23 +94,21 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
                 <img className={classes.img} alt={title} src={imageSrc} />
               </ButtonBase>
               <div className={classes.iconButtons}>
-                <IconButton
-                  onClick={handleFavorite}
-                >
+                <IconButton onClick={handleFavorite}>
                   {isFavorite ? (
                     <FavoriteRounded color="secondary" />
                   ) : (
                     <FavoriteBorderRounded color="secondary" />
                   )}
+                  <Typography variant="srOnly">Favorite</Typography>
                 </IconButton>
-                <IconButton
-                  onClick={handleWatchList}
-                >
+                <IconButton onClick={handleWatchList}>
                   {isInWatchList ? (
                     <BookmarkRounded color="primary" />
                   ) : (
                     <BookmarkBorderRounded color="primary" />
                   )}
+                  <Typography variant="srOnly">Watch list</Typography>
                 </IconButton>
               </div>
             </Grid>
@@ -147,23 +139,21 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
             </Grid>
             <Hidden smDown>
               <Grid item>
-                <IconButton
-                  onClick={handleFavorite}
-                >
+                <IconButton onClick={handleFavorite}>
                   {isFavorite ? (
                     <FavoriteRounded color="secondary" />
                   ) : (
                     <FavoriteBorderRounded color="secondary" />
                   )}
+                  <Typography variant="srOnly">Favorite</Typography>
                 </IconButton>
-                <IconButton
-                  onClick={handleWatchList}
-                >
+                <IconButton onClick={handleWatchList}>
                   {isInWatchList ? (
                     <BookmarkRounded color="primary" />
                   ) : (
                     <BookmarkBorderRounded color="primary" />
                   )}
+                  <Typography variant="srOnly">Watch list</Typography>
                 </IconButton>
               </Grid>
             </Hidden>
@@ -175,55 +165,58 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
 }
 export default MovieCard
 
-const useStyles = makeStyles((theme: Theme) => {
-  const {
-    spacing,
-    breakpoints: { up },
-  } = theme
-  return createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: spacing(2),
-      margin: 'auto',
-      marginTop: spacing(1),
-      maxWidth: '90%',
-    },
-    imageWrapper: {
-      position: 'relative',
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-    image: {
-      width: 250,
-      height: 250,
-    },
-    img: {
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
-    iconButtons: {
-      display: 'flex',
-      flexDirection: 'column',
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      [up('sm')]: {
-        flexDirection: 'row',
+const useStyles = makeStyles(
+  (theme: Theme) => {
+    const {
+      spacing,
+      breakpoints: { up },
+    } = theme
+    return createStyles({
+      root: {
+        flexGrow: 1,
       },
-    },
-    description: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-    },
-    starIcon: {
-      fill: '#fcd202',
-      marginRight: spacing(0.5),
-    },
-  })
-})
+      paper: {
+        padding: spacing(2),
+        margin: 'auto',
+        marginTop: spacing(1),
+        maxWidth: '90%',
+      },
+      imageWrapper: {
+        position: 'relative',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      image: {
+        width: 250,
+        height: 250,
+      },
+      img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+      },
+      iconButtons: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        [up('sm')]: {
+          flexDirection: 'row',
+        },
+      },
+      description: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+      },
+      starIcon: {
+        fill: '#fcd202',
+        marginRight: spacing(0.5),
+      },
+    })
+  },
+  { name: 'MovieCard' }
+)

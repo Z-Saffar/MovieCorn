@@ -3,18 +3,22 @@ import React, { createContext, FC, useContext, useState } from 'react'
 
 interface FavoriteContextType {
   favoriteContextList: StoredData
-  setFavoriteContextList: React.Dispatch<
-    React.SetStateAction<StoredData>
-  >
+  setFavoriteContextList: React.Dispatch<React.SetStateAction<StoredData>>
 }
 export interface FavoriteProviderProps {
-  value: FavoriteContextType
+  value?: FavoriteContextType
 }
 
 export const FavoriteContext = createContext<FavoriteContextType | null>(null)
 
-const FavoriteProvider: FC<FavoriteProviderProps> = ({ children, value }) => {
-  const [favoriteContextList, setFavoriteContextList] = useState<StoredData>(value.favoriteContextList)
+const FavoriteProvider: FC<FavoriteProviderProps> = ({
+  children,
+  value = { favoriteContextList: {}, setFavoriteContextList: () => {} },
+}) => {
+  const [favoriteContextList, setFavoriteContextList] = useState<StoredData>(
+    value.favoriteContextList
+  )
+
   return (
     <FavoriteContext.Provider
       value={{

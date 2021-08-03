@@ -28,9 +28,9 @@ const ResultPage = () => {
     if (searchText !== searchTextRef.current) {
       setMovies(undefined)
       searchTextRef.current = searchText;
-    } else {
-      search(searchText, pageIndex)
     }
+    search(searchText, pageIndex)
+
   }, [searchText, search, pageIndex])
 
   useEffect(() => {

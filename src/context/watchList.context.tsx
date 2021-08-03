@@ -3,18 +3,24 @@ import React, { createContext, FC, useContext, useState } from 'react'
 
 interface WatchlistContextType {
   watchListInContext: StoredData
-  setWatchListInContext: React.Dispatch<
-    React.SetStateAction<StoredData>
-  >
+  setWatchListInContext: React.Dispatch<React.SetStateAction<StoredData>>
 }
 interface WatchListProviderProps {
-  value: WatchlistContextType
+  value?: WatchlistContextType
 }
 
 export const WatchListContext = createContext<WatchlistContextType | null>(null)
 
-const WatchListProvider: FC<WatchListProviderProps> = ({ children, value }) => {
-  const [watchListInContext, setWatchListInContext] = useState<StoredData>(value.watchListInContext)
+const WatchListProvider: FC<WatchListProviderProps> = ({
+  children,
+  value = {
+    watchListInContext: {},
+    setWatchListInContext: () => {},
+  },
+}) => {
+  const [watchListInContext, setWatchListInContext] = useState<StoredData>(
+    value.watchListInContext
+  )
 
   return (
     <WatchListContext.Provider
