@@ -15,12 +15,19 @@ const carouseBuilder = build<ICarouselProps>('Movie', {
         ]
     },
 })
-test('renders Carousel with 2 item', () => {
+test('renders Carousel', () => {
     const data = carouseBuilder()
-    const { getByAltText, getByRole } = render(
+    const { container } = render(
         <Carousel {...data} />
     )
+    expect(container).toBeInTheDocument()
 
+})
+test('render loading when there is no slide', () => {
+    const { getByRole } = render(
+        <Carousel items={[]} />
+    )
+    expect(getByRole('progressbar')).toBeInTheDocument()
 })
 
 

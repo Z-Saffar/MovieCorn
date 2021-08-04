@@ -1,36 +1,27 @@
 import { Card, CardMedia, createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
 import { VFC } from "react";
 
-export type BannerItemType = {
-    title: string, imageUrl: string, isVideo?: boolean
+export interface BannerItemType {
+    title: string
+    imageUrl: string
 }
-interface Props {
+export interface BannerProps {
     items: BannerItemType[]
 }
-const Banner: VFC<Props> = ({ items }) => {
+const Banner: VFC<BannerProps> = ({ items }) => {
     const classes = useStyles()
-    let bannerItems = [];
-
-
-    for (const item of items) {
-
-        const media = (
-            <Grid item xs={12} sm={6} lg={4} key={item.title}>
-                <CardMedia
-                    className={classes.Media}
-                    image={item.imageUrl}
-                    title={item.title}
-                />
-            </Grid>
-        )
-        bannerItems.push(media);
-    }
-
-
     return (
         <Card raised className={classes.Banner}>
             <Grid container spacing={0} className={classes.BannerGrid}>
-                {bannerItems}
+                {items?.map((item) => {
+                    return <Grid item xs={12} sm={6} lg={4} key={item.title}>
+                        <CardMedia
+                            className={classes.Media}
+                            image={item.imageUrl}
+                            title={item.title}
+                        />
+                    </Grid>
+                })}
             </Grid>
         </Card>
     )
