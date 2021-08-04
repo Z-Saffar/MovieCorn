@@ -38,7 +38,10 @@ export default Carousel
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    root: {
+      position: 'relative',
+      minHeight: 400
+    },
     progress: {
       position: 'absolute',
       top: 0,
