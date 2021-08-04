@@ -3,35 +3,33 @@ import {
   CircularProgress,
   createStyles,
   makeStyles,
-  Theme,
+  Theme
 } from '@material-ui/core'
 import { MovieResult } from 'containers/home-page/types'
-import { getAbsoluteImageURL } from 'helper'
 import React, { VFC } from 'react'
 import ReactCarousel, { CarouselProps } from 'react-material-ui-carousel'
-import CarouselItem from './CarouselItem'
+import Banner from './Banner/Banner'
+import useBanner from './Banner/useBanner'
 
 export interface ICarouselProps extends CarouselProps {
   items?: MovieResult[]
 }
+
 const Carousel: VFC<ICarouselProps> = (props) => {
   const classes = useStyles()
   const { items, ...others } = props
-
+  const bannerItems = useBanner(items)
   return (
     <Box className={classes.root}>
-      {!items && <CircularProgress classes={{ root: classes.progress }} />}
-      <ReactCarousel animation="slide" {...others}>
-        {items?.slice(0, 5).map((item) => {
-          return (
-            <CarouselItem
-              key={item.id}
-              title={item.title}
-              imageUrl={getAbsoluteImageURL(item.backdrop_path, 1280)}
-            />
-          )
-        })}
-      </ReactCarousel>
+      {!items || !items.length ? <CircularProgress classes={{ root: classes.progress }} /> :
+        <ReactCarousel animation="slide" autoPlay={false} {...others}>
+          {
+            bannerItems?.map((banner, index) => {
+              return <Banner items={banner} key={index} />
+            })
+          }
+        </ReactCarousel>
+      }
     </Box>
   )
 }
@@ -40,12 +38,7 @@ export default Carousel
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      position: 'relative',
-      minHeight: 400,
-      display: 'flex',
-      justifyContent: 'center',
-    },
+    root: {},
     progress: {
       position: 'absolute',
       top: 0,
