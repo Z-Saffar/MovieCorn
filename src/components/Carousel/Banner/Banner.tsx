@@ -1,4 +1,9 @@
-import { Card, CardMedia, createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
+import {
+    Box, Card, CardMedia,
+    createStyles,
+    Grid, makeStyles, Theme, alpha,
+    Typography
+} from "@material-ui/core";
 import { VFC } from "react";
 
 export interface BannerItemType {
@@ -11,15 +16,21 @@ export interface BannerProps {
 const Banner: VFC<BannerProps> = ({ items }) => {
     const classes = useStyles()
     return (
-        <Card raised className={classes.Banner}>
-            <Grid container spacing={0} className={classes.BannerGrid}>
+        <Card raised className={classes.banner}>
+            <Grid container spacing={0} className={classes.bannerGrid}>
                 {items?.map((item) => {
-                    return <Grid item xs={12} sm={6} lg={4} key={item.title}>
+                    return <Grid item xs={12} sm={6} lg={4} key={item.title} className={classes.root}>
+
                         <CardMedia
-                            className={classes.Media}
+                            className={classes.media}
                             image={item.imageUrl}
                             title={item.title}
                         />
+                        <Box className={classes.title}>
+                            <Typography variant='h5'>{item.title}</Typography>
+
+                        </Box>
+
                     </Grid>
                 })}
             </Grid>
@@ -31,11 +42,19 @@ export default Banner
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        Banner: {
+        root: {
+            position: 'relative',
+            '&:hover': {
+                '& $title': {
+                    display: 'block'
+                }
+            }
+        },
+        banner: {
             height: 400,
             position: 'relative'
         },
-        Media: {
+        media: {
             backgroundColor: 'white',
             height: '100%',
             overflow: 'hidden',
@@ -43,13 +62,22 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: '300ms',
             cursor: 'pointer',
             '&:hover': {
-                filter: 'brightness(115%)'
+                filter: 'brightness(115%)',
             }
         },
-        BannerGrid:
+        bannerGrid:
         {
             height: '100%',
             position: 'relative'
+        },
+        title: {
+            position: 'absolute',
+            bottom: 0,
+            padding: theme.spacing(1),
+            backgroundColor: alpha(theme.palette.common.black, 0.60),
+            width: '100%',
+            display: 'none',
+
         }
     })
 )

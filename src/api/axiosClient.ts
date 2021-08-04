@@ -13,7 +13,11 @@ export const Axios = axios.create({
 export const apis = {
   getLatestData: () =>
     Axios.get<Pagination<MovieResult>>(Endpoints.TOP_RATED, {
-      params: { api_key: process.env.REACT_APP_TMDB_API_KEY, language: 'en_US' },
+      params: {
+        api_key: process.env.REACT_APP_TMDB_API_KEY,
+        language: 'en_US',
+        page: Math.floor(Math.random() * (5 - 1 + 1) + 1),
+      },
     }),
   searchData: ({ searchText, pageIndex }: SearchParamType) =>
     Axios.get<Pagination<MovieResult>>(Endpoints.SEARCH, {
