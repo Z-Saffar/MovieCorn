@@ -1,6 +1,6 @@
 import { apis } from 'api/axiosClient'
 import { useEffect, useState } from 'react'
-import { MovieResult } from '../types'
+import { MovieResult } from 'types/types'
 
 export function useTopRated() {
   const [topRateData, setTopRateData] = useState<MovieResult[]>()

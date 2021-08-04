@@ -1,4 +1,4 @@
-import { MovieResult } from 'containers/home-page/types'
+import { MovieResult } from 'types/types'
 import { getAbsoluteImageURL } from 'helper'
 import { useMediaDetector } from 'theme/useMediaDetector'
 import { BannerItemType } from './Banner'
@@ -11,7 +11,7 @@ const useBanner = (items: MovieResult[] | undefined) => {
   const itemsWithPoster = items?.filter((item) => item.backdrop_path)
   const bannerItems = itemsWithPoster?.map((item, index) => {
     return {
-      imageUrl: getAbsoluteImageURL(item.backdrop_path, 1280),
+      imageUrl: getAbsoluteImageURL(item.backdrop_path, 500),
       title: item.title,
     }
   })

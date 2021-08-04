@@ -5,7 +5,7 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core'
-import { MovieResult } from 'containers/home-page/types'
+import { MovieResult } from 'types/types'
 import React, { VFC } from 'react'
 import ReactCarousel, { CarouselProps } from 'react-material-ui-carousel'
 import Banner from './Banner/Banner'

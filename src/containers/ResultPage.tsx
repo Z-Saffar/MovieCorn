@@ -11,7 +11,7 @@ import NoItem from 'components/NoItem'
 import { useQuery } from 'hooks/useQuery'
 import useLazySearchMovie from 'hooks/useSearchMovie'
 import { useEffect, useRef, useState } from 'react'
-import { MovieResult } from './home-page/types'
+import { MovieResult } from '../types/types'
 import Layout from './Layout'
 
 const ResultPage = () => {
