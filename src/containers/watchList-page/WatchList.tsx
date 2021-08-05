@@ -1,7 +1,4 @@
-import {
-  Box,
-  Grid
-} from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
 import MovieCard from 'components/MovieCard'
 import NoItem from 'components/NoItem'
 import { useWatchListContext } from 'context/watchList.context'
@@ -10,7 +7,7 @@ const WatchList = () => {
   const { watchListInContext } = useWatchListContext()
   const watchListCount = Object.keys(watchListInContext).length
   return watchListCount === 0 ? (
-    <NoItem text='No item in your watch list!!!' />
+    <NoItem text="No item in your watch list!!!" />
   ) : (
     <Box mt={4} mb={8}>
       <Grid container>
@@ -26,4 +23,3 @@ const WatchList = () => {
   )
 }
 export default WatchList
-

@@ -21,10 +21,10 @@ const SearchBox = () => {
   }
 
   return (
-    <form onSubmit={handleSearch} data-testid='searchForm' className={classes.root}>
+    <form onSubmit={handleSearch} data-testid="searchForm" className={classes.root}>
       <div className={classes.search}>
         <InputBase
-          defaultValue=''
+          defaultValue=""
           name="search-box"
           placeholder="Search movies …"
           classes={{
@@ -37,7 +37,12 @@ const SearchBox = () => {
             setSearchText(value)
           }}
         />
-        <IconButton type="submit" color="inherit" aria-label="search" onClick={handleSearch}>
+        <IconButton
+          type="submit"
+          color="inherit"
+          aria-label="search"
+          onClick={handleSearch}
+        >
           <SearchIcon />
         </IconButton>
       </div>
@@ -49,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => {
   const { spacing, palette, shape } = theme
   return createStyles({
     root: {
-      backgroundColor: palette.grey[900]
+      backgroundColor: palette.grey[900],
     },
     search: {
       position: 'relative',

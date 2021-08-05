@@ -129,7 +129,6 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
               aria-controls="mobile-menu"
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-
             >
               <MoreVert />
             </IconButton>
@@ -154,8 +153,7 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     appBar: {
       backgroundColor: theme.palette.common.black,
-      borderBottom: `3px solid ${theme.palette.primary.main}`
-
+      borderBottom: `3px solid ${theme.palette.primary.main}`,
     },
     logoWrapper: {
       '& a': {

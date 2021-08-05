@@ -3,24 +3,18 @@ import { render } from '@testing-library/react'
 import NoItem, { NoItemProps } from './NoItem'
 
 const noItemBuilder = build<NoItemProps>('', {
-    fields: {
-        text: fake((f) => f.lorem.words(10)),
-    },
+  fields: {
+    text: fake((f) => f.lorem.words(10)),
+  },
 })
 test('renders NoItem', () => {
-    const data = noItemBuilder()
+  const data = noItemBuilder()
 
-    const { container, getByText } = render(
-        <NoItem {...data} />
-    )
+  const { container, getByText } = render(<NoItem {...data} />)
 
-    expect(container).toBeInTheDocument()
+  expect(container).toBeInTheDocument()
 
-    expect(getByText(data.text)).toBeInTheDocument()
+  expect(getByText(data.text)).toBeInTheDocument()
 
-    expect(container.querySelector('svg')).toBeInTheDocument()
+  expect(container.querySelector('svg')).toBeInTheDocument()
 })
-
-
-
-

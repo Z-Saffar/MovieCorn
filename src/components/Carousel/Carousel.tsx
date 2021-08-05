@@ -13,14 +13,11 @@ const Carousel: VFC<ICarouselProps> = (props) => {
   const bannerItems = useBanner(items)
   return (
     <ReactCarousel animation="slide" autoPlay={false} {...others}>
-      {
-        bannerItems?.map((banner, index) => {
-          return <Banner items={banner} key={index} />
-        })
-      }
+      {bannerItems?.map((banner, index) => {
+        return <Banner items={banner} key={index} />
+      })}
     </ReactCarousel>
   )
 }
 
 export default Carousel
-

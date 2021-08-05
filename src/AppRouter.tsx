@@ -21,7 +21,7 @@ const AppRouter = () => {
       <Route path="/watchlist">
         <WatchListPage />
       </Route>
-      <Route path="/Movie/:movieId" >
+      <Route path="/Movie/:movieId">
         <DetailPage />
       </Route>
     </Switch>

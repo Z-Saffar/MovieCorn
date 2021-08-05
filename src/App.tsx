@@ -6,7 +6,6 @@ import './App.css'
 import AppRouter from './AppRouter'
 import { theme } from 'theme/theme'
 function App() {
-
   useEffect(() => {
     localstorageInitialization()
   }, [])

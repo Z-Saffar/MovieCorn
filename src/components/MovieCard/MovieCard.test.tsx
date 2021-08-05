@@ -11,16 +11,17 @@ import { getAbsoluteImageURL } from 'helper'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 
-
 const SizeWrapper = (props: any) => {
   const history = createMemoryHistory()
   const theme = createTheme({
     props: { MuiWithWidth: { initialWidth: 'sm' } },
   })
 
-  return <Router history={history}>
-    <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-  </Router>
+  return (
+    <Router history={history}>
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+    </Router>
+  )
 }
 
 const movieBuilder = build<Movie>('Movie', {
@@ -38,14 +39,18 @@ test('renders MovieCard component', () => {
 
   const { getByText, getByRole } = render(
     <SizeWrapper>
-      <FavoriteProvider value={{
-        favoriteContextList: {},
-        setFavoriteContextList: () => { },
-      }}>
-        <WatchListProvider value={{
-          watchListInContext: {},
-          setWatchListInContext: () => { }
-        }}>
+      <FavoriteProvider
+        value={{
+          favoriteContextList: {},
+          setFavoriteContextList: () => {},
+        }}
+      >
+        <WatchListProvider
+          value={{
+            watchListInContext: {},
+            setWatchListInContext: () => {},
+          }}
+        >
           <MovieCard item={movie} />
         </WatchListProvider>
       </FavoriteProvider>
@@ -63,4 +68,3 @@ test('renders MovieCard component', () => {
   getByRole('button', { name: /Favorite/i })
   getByRole('button', { name: /Watch list/i })
 })
-

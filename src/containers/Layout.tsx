@@ -16,13 +16,13 @@ const Layout: FC<{ withSearchBox: boolean }> = ({
     <FavoriteProvider
       value={{
         favoriteContextList: favoriteList,
-        setFavoriteContextList: () => { },
+        setFavoriteContextList: () => {},
       }}
     >
       <WatchListProvider
         value={{
           watchListInContext: watchList,
-          setWatchListInContext: () => { },
+          setWatchListInContext: () => {},
         }}
       >
         <Container maxWidth="xl">

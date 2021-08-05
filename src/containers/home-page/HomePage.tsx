@@ -13,10 +13,15 @@ const HomePage = () => {
     <Layout withSearchBox={false}>
       <Box mt={8}>
         {loading && <Loading />}
-        {error ? <Box className={classes.error}>
-          <Typography color='textPrimary' variant='h5'>{error}</Typography></Box> :
+        {error ? (
+          <Box className={classes.error}>
+            <Typography color="textPrimary" variant="h5">
+              {error}
+            </Typography>
+          </Box>
+        ) : (
           <Carousel items={topRateData} />
-        }
+        )}
         <div className={classes.searchWrapper}>
           <Box className={classes.searchInnerWrapper}>
             <SearchBox />
@@ -60,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: 400
-    }
+      height: 400,
+    },
   })
 })
