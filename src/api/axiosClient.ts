@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { MovieDetails, MovieResult, Pagination } from 'types/types'
 import { Endpoints } from './endpoints'
 
@@ -6,9 +6,31 @@ interface SearchParamType {
   searchText: string
   pageIndex: number
 }
+
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_MOVIE_BASE_URL,
 })
+
+Axios.interceptors.response.use(
+  function (response) {
+    const { status } = response
+    if (status === 401 || status === 404) {
+      throw new Error(response.data.status_message)
+    }
+    return response
+  },
+  function (error: AxiosError) {
+    const status = error.response?.status
+    if (status === 401 || status === 404) {
+      return Promise.reject({ ...error.response?.data })
+    } else {
+      return Promise.reject({
+        status_message:
+          'There is something wrong with connection. Please try again!',
+      })
+    }
+  }
+)
 
 export const apis = {
   getLatestData: () =>
@@ -21,6 +43,7 @@ export const apis = {
     }),
   searchData: ({ searchText, pageIndex }: SearchParamType) =>
     Axios.get<Pagination<MovieResult>>(Endpoints.SEARCH, {
+      validateStatus: () => true,
       params: {
         api_key: process.env.REACT_APP_TMDB_API_KEY,
         language: 'en_US',

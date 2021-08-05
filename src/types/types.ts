@@ -49,3 +49,8 @@ type Genres = {
   id: number
   name: string
 }
+
+export type Error = {
+  status_code: number
+  status_message: string
+}
