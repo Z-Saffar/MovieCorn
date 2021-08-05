@@ -23,12 +23,7 @@ test('renders Carousel', () => {
     expect(container).toBeInTheDocument()
 
 })
-test('render loading when there is no slide', () => {
-    const { getByRole } = render(
-        <Carousel items={[]} />
-    )
-    expect(getByRole('progressbar')).toBeInTheDocument()
-})
+
 
 
 

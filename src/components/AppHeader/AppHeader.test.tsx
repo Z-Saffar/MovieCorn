@@ -1,11 +1,10 @@
-import React from 'react'
-import { getAllByRole, render } from '@testing-library/react'
-import { build, fake } from '@jackfranklin/test-data-bot'
-import AppHeader from './AppHeader'
+import { render } from '@testing-library/react'
 import { FavoriteProvider } from 'context/favorite.context'
 import { WatchListProvider } from 'context/watchList.context'
 import { createMemoryHistory } from 'history'
+import React from 'react'
 import { Router } from 'react-router-dom'
+import AppHeader from './AppHeader'
 
 const renderAppHeaderWithSearch = () => {
     const history = createMemoryHistory()
@@ -79,6 +78,8 @@ test('renders AppHeader component without searchBox', () => {
     expect(linkEl).toBeInTheDocument()
 
     expect(getByText('MovieCorn')).toBeInTheDocument()
+
+    //TODO : it should test after mocking breakpoint 
 
     // const searchText = await findByRole('textbox')
     // debug(searchText)

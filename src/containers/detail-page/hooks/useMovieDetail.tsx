@@ -1,6 +1,6 @@
-import { apis } from 'api/axiosClient'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { apis } from 'api/axiosClient';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { MovieDetails } from 'types/types';
 type MovieDetailParam = {
     movieId: string;
@@ -8,16 +8,22 @@ type MovieDetailParam = {
 export function useMovieDetail() {
     const [data, setData] = useState<MovieDetails>()
     const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string>('')
     const param = useParams<MovieDetailParam>()
 
     useEffect(() => {
         const apiCall = async () => {
-            const { data } = await apis.getMovieDetails(Number(param.movieId))
-            setData(data)
-            setLoading(false)
+            const result = await apis.getMovieDetails(Number(param.movieId)).catch((err) => {
+                setError(err.status_message)
+                setLoading(false)
+            })
+            if (result) {
+                setData(result?.data)
+            }
+
         }
         apiCall()
     }, [param.movieId])
 
-    return { loading, data }
+    return { loading, data, error }
 }

@@ -8,13 +8,19 @@ import { WatchListProvider } from 'context/watchList.context'
 
 import { createTheme, ThemeProvider } from '@material-ui/core'
 import { getAbsoluteImageURL } from 'helper'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
+
 
 const SizeWrapper = (props: any) => {
+  const history = createMemoryHistory()
   const theme = createTheme({
     props: { MuiWithWidth: { initialWidth: 'sm' } },
   })
 
-  return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+  return <Router history={history}>
+    <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+  </Router>
 }
 
 const movieBuilder = build<Movie>('Movie', {
@@ -57,3 +63,4 @@ test('renders MovieCard component', () => {
   getByRole('button', { name: /Favorite/i })
   getByRole('button', { name: /Watch list/i })
 })
+

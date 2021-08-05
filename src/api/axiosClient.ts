@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { MovieDetails, MovieResult, Pagination } from 'types/types'
 import { Endpoints } from './endpoints'
 
@@ -11,30 +11,26 @@ export const Axios = axios.create({
   baseURL: process.env.REACT_APP_MOVIE_BASE_URL,
 })
 
-// Axios.interceptors.request.use(
-//   function (config) {
-//     debugger
-//     return config
-//   },
-//   function (error) {
-//     debugger
-//     console.log('heeey', JSON.parse(JSON.stringify(error)))
-//     return Promise.reject(error)
-//   }
-// )
-
-// // Add a response interceptor
-// Axios.interceptors.response.use(
-//   function (response) {
-//     debugger
-//     return response
-//   },
-//   function (error) {
-//     debugger
-//     console.log()
-//     return Promise.reject(error)
-//   }
-// )
+Axios.interceptors.response.use(
+  function (response) {
+    const { status } = response
+    if (status === 401 || status === 404) {
+      throw new Error(response.data.status_message)
+    }
+    return response
+  },
+  function (error: AxiosError) {
+    const status = error.response?.status
+    if (status === 401 || status === 404) {
+      return Promise.reject({ ...error.response?.data })
+    } else {
+      return Promise.reject({
+        status_message:
+          'There is something wrong with connection. Please try again!',
+      })
+    }
+  }
+)
 
 export const apis = {
   getLatestData: () =>
