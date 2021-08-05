@@ -50,7 +50,7 @@ type Genres = {
   name: string
 }
 
-export type Error = {
+export interface ServerError extends Error {
   status_code: number
   status_message: string
 }

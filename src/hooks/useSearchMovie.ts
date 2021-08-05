@@ -1,6 +1,6 @@
 import { apis } from 'api/axiosClient'
 import { useCallback, useState } from 'react'
-import { MovieResult } from 'types/types'
+import { MovieResult, ServerError } from 'types/types'
 
 const useLazySearchMovie = (): [
   (searchText: string, pageIndex: number) => Promise<void>,
@@ -13,13 +13,14 @@ const useLazySearchMovie = (): [
     setLoading(true)
     const data = await apis
       .searchData({ searchText, pageIndex })
-      .catch((err: Error) => {
-        setError(err.message)
+      .catch((err: ServerError) => {
+        setError(err?.message || err?.status_message)
         setLoading(false)
       })
-    debugger
-    setMovies(data?.data?.results)
-    setLoading(false)
+    if (data) {
+      setMovies(data?.data?.results)
+      setLoading(false)
+    }
   }, [])
   return [search, { loading, data: movies, error }]
 }

@@ -9,6 +9,7 @@ interface SearchParamType {
 
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_MOVIE_BASE_URL,
+  timeout: 5000,
 })
 
 Axios.interceptors.response.use(

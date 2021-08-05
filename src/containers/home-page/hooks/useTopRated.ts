@@ -1,6 +1,6 @@
 import { apis } from 'api/axiosClient'
 import { useEffect, useState } from 'react'
-import { Error, MovieResult } from 'types/types'
+import { ServerError, MovieResult } from 'types/types'
 
 export function useTopRated() {
   const [topRateData, setTopRateData] = useState<MovieResult[]>()
@@ -9,7 +9,7 @@ export function useTopRated() {
 
   useEffect(() => {
     const apiCall = async () => {
-      const result = await apis.getLatestData().catch((err: Error) => {
+      const result = await apis.getLatestData().catch((err: ServerError) => {
         setError(err.status_message)
         setLoading(false)
       })
