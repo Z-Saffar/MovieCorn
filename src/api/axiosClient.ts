@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { MovieDetails, MovieResult, Pagination } from 'types/types'
+import { MovieDetails, MovieResult, Pagination, TrailerResponse } from 'types/types'
 import { Endpoints } from './endpoints'
 
 interface SearchParamType {
@@ -55,6 +55,13 @@ export const apis = {
     }),
   getMovieDetails: (id: number) =>
     Axios.get<MovieDetails>(`${Endpoints.DETAILS}/${id}`, {
+      params: {
+        api_key: process.env.REACT_APP_TMDB_API_KEY,
+        language: 'en_US',
+      },
+    }),
+  getTrailer: (id: number) =>
+    Axios.get<TrailerResponse>(`${Endpoints.DETAILS}/${id}/videos`, {
       params: {
         api_key: process.env.REACT_APP_TMDB_API_KEY,
         language: 'en_US',

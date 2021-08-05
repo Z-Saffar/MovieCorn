@@ -1,30 +1,28 @@
 import {
     Box, CardMedia,
-    Chip, createStyles, Grid, makeStyles, Theme, Typography,
-    Divider
+    Chip, createStyles, Divider, Grid, makeStyles, Theme, Typography
 } from "@material-ui/core"
-import { getAbsoluteImageURL } from "helper"
+import Loading from "components/Loading"
+import { useMovieTrailer } from "containers/detail-page/hooks/useMovieTrailer"
 import { VFC } from "react"
 import { MovieDetails } from "types/types"
 
 const MovieDetail: VFC<MovieDetails> = (props) => {
     const classes = useStyles()
-    const { poster_path, title, overview, genres, production_companies,
+    const { data, loading, error } = useMovieTrailer()
+
+    const { title, overview, genres, production_companies,
         production_countries,
         runtime, spoken_languages, release_date
     } = props
 
-    const imageSrc = !!poster_path
-        ? getAbsoluteImageURL(poster_path, 500)
-        : process.env.PUBLIC_URL + '/images/noImage.png'
-
     const moreDetails = [{
         title: 'Production Company',
-        description: production_companies?.[0]?.name
+        description: production_companies?.[0]?.name || '---'
     },
     {
         title: 'Production Country',
-        description: production_countries?.[0]?.name
+        description: production_countries?.[0]?.name || '---'
     },
     {
         title: 'Spoken Language',
@@ -32,12 +30,12 @@ const MovieDetail: VFC<MovieDetails> = (props) => {
     },
     {
         title: 'Released date',
-        description: release_date
+        description: release_date || '---'
     },
 
     {
         title: 'Number of played',
-        description: runtime
+        description: runtime || '---'
     }
     ]
 
@@ -47,11 +45,16 @@ const MovieDetail: VFC<MovieDetails> = (props) => {
                 <Grid item xs={12} container>
                     <Grid item xs={12} md={4}>
                         <Box className={classes.imageWrapper}>
-                            <CardMedia
-                                className={classes.media}
-                                image={imageSrc}
-                                title={title}
-                            />
+                            {loading && <Loading />}
+                            {data ?
+                                <CardMedia component='iframe'
+                                    width={300}
+                                    height={400}
+                                    src={`https://youtube.com/embed/${data.key}`}
+                                    allowFullScreen
+                                /> :
+                                error && <Typography variant='h5'>{error}</Typography>
+                            }
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={8} container>
@@ -70,7 +73,7 @@ const MovieDetail: VFC<MovieDetails> = (props) => {
                                 <Typography className={classes.overview}>{overview}</Typography>
                                 {
                                     moreDetails.map((item) => {
-                                        return <>
+                                        return <div key={item.title}>
                                             <Box mt={2} mb={2}>
                                                 <Divider />
                                             </Box>
@@ -82,7 +85,7 @@ const MovieDetail: VFC<MovieDetails> = (props) => {
                                                     <Typography className={classes.moreDetailDescription}>{item.description}</Typography>
                                                 </Grid>
                                             </Grid>
-                                        </>
+                                        </div>
                                     })
                                 }
                             </Box>
@@ -114,7 +117,6 @@ const useStyles = makeStyles((theme: Theme) => {
             }
         },
         imageWrapper: {
-            height: 'calc(100vh - 70px)',
             position: 'relative'
         },
         overview: {

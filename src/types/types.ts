@@ -54,3 +54,15 @@ export interface ServerError extends Error {
   status_code: number
   status_message: string
 }
+
+export interface Trailer {
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+}
+export interface TrailerResponse {
+  id: number
+  results: Trailer[]
+}
