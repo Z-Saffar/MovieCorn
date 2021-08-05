@@ -20,6 +20,7 @@ import { useFavoriteContext } from 'context/favorite.context'
 import { useWatchListContext } from 'context/watchList.context'
 import { getAbsoluteImageURL } from 'helper'
 import React, { useCallback, useEffect, useState, VFC } from 'react'
+import { Link } from 'react-router-dom'
 
 import { MovieCardProps, StoredData } from './types'
 
@@ -90,9 +91,12 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
         <Grid container spacing={2}>
           <Hidden mdUp>
             <Grid item className={classes.imageWrapper}>
-              <ButtonBase className={classes.image}>
-                <img className={classes.img} alt={title} src={imageSrc} />
-              </ButtonBase>
+              <Link to={`/movie/${id}`}>
+                <ButtonBase className={classes.image}>
+                  <img className={classes.img} alt={title} src={imageSrc} />
+                </ButtonBase>
+              </Link>
+
               <div className={classes.iconButtons}>
                 <IconButton onClick={handleFavorite}>
                   {isFavorite ? (
@@ -116,9 +120,11 @@ const MovieCard: VFC<MovieCardProps> = ({ item }) => {
           <Grid item xs={12} sm container>
             <Hidden smDown>
               <Grid item>
-                <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt={title} src={imageSrc} />
-                </ButtonBase>
+                <Link to={`/movie/${id}`}>
+                  <ButtonBase className={classes.image}>
+                    <img className={classes.img} alt={title} src={imageSrc} />
+                  </ButtonBase>
+                </Link>
               </Grid>
             </Hidden>
             <Grid item xs className={classes.description}>

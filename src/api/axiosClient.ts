@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MovieResult, Pagination } from 'containers/home-page/types'
+import { MovieDetails, MovieResult, Pagination } from 'types/types'
 import { Endpoints } from './endpoints'
 
 interface SearchParamType {
@@ -38,25 +38,13 @@ export const Axios = axios.create({
 
 export const apis = {
   getLatestData: () =>
-    Axios.get<Pagination<MovieResult>>(Endpoints.TOP_RATED, {
-      params: { api_key: process.env.REACT_APP_TMDB_API_KEY, language: 'en_US' },
-    })
-      .then((res) => {
-        debugger
-        return { data: res.data, error: null }
-      })
-      .catch((error) => {
-        const errorObj = JSON.parse(JSON.stringify(error))
-
-        // if (status === 401) {
-        //   return {
-        //     data: null,
-        //     error: Errors.ERROR_401,
-        //   }
-        // } else if (status === 500) {
-        //   return { data: null, error: Errors.ERROR_500 }
-        // }
-      }),
+    Axios.get<Pagination<MovieResult>>(Endpoints.NOW_PLAYING, {
+      params: {
+        api_key: process.env.REACT_APP_TMDB_API_KEY,
+        language: 'en_US',
+        page: Math.floor(Math.random() * (5 - 1 + 1) + 1),
+      },
+    }),
   searchData: ({ searchText, pageIndex }: SearchParamType) =>
     Axios.get<Pagination<MovieResult>>(Endpoints.SEARCH, {
       validateStatus: () => true,
@@ -66,6 +54,13 @@ export const apis = {
         include_adult: false,
         query: searchText,
         page: pageIndex,
+      },
+    }),
+  getMovieDetails: (id: number) =>
+    Axios.get<MovieDetails>(`${Endpoints.DETAILS}/${id}`, {
+      params: {
+        api_key: process.env.REACT_APP_TMDB_API_KEY,
+        language: 'en_US',
       },
     }),
 }

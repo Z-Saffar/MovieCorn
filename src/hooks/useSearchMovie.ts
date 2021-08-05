@@ -1,5 +1,5 @@
 import { apis } from 'api/axiosClient'
-import { MovieResult } from 'containers/home-page/types'
+import { MovieResult } from 'types/types'
 import { useCallback, useState } from 'react'
 
 const useLazySearchMovie = (): [

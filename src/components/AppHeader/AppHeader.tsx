@@ -82,7 +82,7 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" classes={{ root: classes.appBar }}>
         <Toolbar className={classes.logoWrapper}>
           <Link to="/">
             <Box display="flex" alignItems="center">
@@ -129,7 +129,7 @@ const AppHeader: VFC<IAppHeaderProps> = ({ hasSearchBox }) => {
               aria-controls="mobile-menu"
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+
             >
               <MoreVert />
             </IconButton>
@@ -151,6 +151,11 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     grow: {
       flexGrow: 1,
+    },
+    appBar: {
+      backgroundColor: theme.palette.common.black,
+      borderBottom: `3px solid ${theme.palette.primary.main}`
+
     },
     logoWrapper: {
       '& a': {

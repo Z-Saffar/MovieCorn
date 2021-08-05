@@ -1,3 +1,4 @@
+import DetailPage from 'containers/detail-page/DetailPage'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import FavoritePage from './containers/favorite-page/FavoritePage'
@@ -19,6 +20,9 @@ const AppRouter = () => {
       </Route>
       <Route path="/watchlist">
         <WatchListPage />
+      </Route>
+      <Route path="/Movie/:movieId" >
+        <DetailPage />
       </Route>
     </Switch>
   )
